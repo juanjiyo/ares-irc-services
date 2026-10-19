@@ -117,6 +117,9 @@ final readonly class RegisterCommand implements NickServCommandInterface
             case RegisterNickOutcome::InvalidEmail:
                 $context->reply('register.invalid_email');
                 break;
+            case RegisterNickOutcome::EmailDomainBlocked:
+                $context->reply('register.email_domain_blocked', ['domain' => $result->emailDomain]);
+                break;
             case RegisterNickOutcome::EmailAlreadyUsed:
                 $context->reply('register.email_already_used', [
                     'email' => $result->email,

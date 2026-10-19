@@ -228,6 +228,9 @@ services:
     App\NickServ\Application\Port\Out\EmailVerificationSettingRepositoryInterface:
         alias: App\NickServ\Adapter\Out\Persistence\Doctrine\EmailVerificationSettingDoctrineRepository
 
+    App\NickServ\Application\Port\Out\BlockedEmailDomainRepositoryInterface:
+        alias: App\NickServ\Adapter\Out\Persistence\Doctrine\BlockedEmailDomainDoctrineRepository
+
     App\NickServ\Application\Port\Out\RegistrationThrottle:
         alias: App\NickServ\Adapter\Out\InMemory\InMemoryRegistrationThrottle
 
@@ -1838,6 +1841,9 @@ services:
     App\NickServ\Adapter\In\Irc\Command\ForbidVhostCommand:
         tags: ['nickserv.command']
 
+    App\NickServ\Adapter\In\Irc\Command\BlackmailCommand:
+        tags: ['nickserv.command']
+
     App\NickServ\Application\UseCase\Noexpire\SetNoexpireNickHandler: ~
 
     App\NickServ\Adapter\In\Irc\Command\NoexpireCommand:
@@ -2155,6 +2161,9 @@ services:
     App\NickServ\Adapter\In\Irc\Command\SaregisterCommand:
         tags: ['nickserv.command']
 
+    App\NickServ\Adapter\In\Irc\Command\VregCommand:
+        tags: ['nickserv.command']
+
     # --- UserMessageTypeResolver — NOTICE vs PRIVMSG preference -----------------
 
     App\NickServ\Application\Port\In\UserMessagePreferenceQuery:
@@ -2275,15 +2284,6 @@ services:
         alias: App\OperServ\Adapter\Out\Persistence\Doctrine\DoctrineMotdRepository
 
     App\OperServ\Adapter\In\Irc\Command\MotdCommand:
-        tags: ['operserv.command.new']
-
-    App\OperServ\Application\UseCase\ManageEmailVerification\ManageEmailVerificationHandlerInterface:
-        alias: App\OperServ\Application\UseCase\ManageEmailVerification\ManageEmailVerificationHandler
-
-    App\OperServ\Application\Port\Out\EmailVerificationPolicyPortInterface:
-        alias: App\OperServ\Adapter\Out\Policy\EmailVerificationPolicyAdapter
-
-    App\OperServ\Adapter\In\Irc\Command\EmailVerifyCommand:
         tags: ['operserv.command.new']
 
     App\OperServ\Application\UseCase\ManageIrcop\ManageIrcopHandlerInterface:
