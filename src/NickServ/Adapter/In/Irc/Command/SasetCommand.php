@@ -67,6 +67,7 @@ final readonly class SasetCommand implements NickServCommandInterface, IrcopAudi
             'desc_key' => 'saset.' . strtolower($option) . '.short',
             'help_key' => 'saset.' . strtolower($option) . '.help',
             'syntax_key' => 'saset.' . strtolower($option) . '.syntax',
+            'example_key' => 'saset.' . strtolower($option) . '.example',
         ], self::SUPPORTED_OPTIONS);
     }
 
@@ -78,6 +79,11 @@ final readonly class SasetCommand implements NickServCommandInterface, IrcopAudi
     public function getRequiredPermission(): string
     {
         return NickServPermission::SASET;
+    }
+
+    public function getExampleKey(): string
+    {
+        return 'saset.example';
     }
 
     public function getHelpParams(): array

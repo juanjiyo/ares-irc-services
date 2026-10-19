@@ -33,6 +33,7 @@ register:
   syntax:           "REGISTER <contrasinal> <correo-e>"
   short:            "Rexistrar o seu alcume cos servizos."
   help:             "Inicia o rexistro do seu alcume actual. Enviaráselle un token de verificación\ná conta de correo electrónico proporcionada. Complete o rexistro\nexecutando \x0303/msg %bot% VERIFY <token>\x03. O token caduca en 1 hora.\nSe non chega, comprobe o seu cartafol de spam ou use \x0303RESEND\x03."
+  example:          "/msg %bot% REGISTER s3cret ana@example.com"
   pending:          "\x0307→\x03 Enviouse un token de verificación a \x02%email%\x02.\n  Execute \x0303/msg %bot% VERIFY <token>\x03 para completar o rexistro.\n  Non o recibiu? Comprobe spam ou use \x0303/msg %bot% RESEND\x03\n  O token caducará en \x021 hora\x02."
   registered:       "\x0303✔\x03 O alcume \x02%nickname%\x02 foi rexistrado."
   already_registered: "\x0304✗\x03 O alcume \x02%nickname%\x02 xa está rexistrado."
@@ -49,6 +50,7 @@ verify:
   syntax:           "VERIFY <token>"
   short:            "Confirmar o seu enderezo de correo electrónico e activar o seu alcume."
   help:             "Completa o rexistro verificando o token enviado ao seu correo electrónico.\nO token é válido durante 1 hora desde o momento do rexistro."
+  example:          "/msg %bot% VERIFY 4XZ9KQ2M"
   success:          "\x0303✔\x03 O alcume \x02%nickname%\x02 foi rexistrado con éxito e agora está identificado."
   success_native:   "\x0303✔\x03 O alcume \x02%nickname%\x02 rexistrouse correctamente. Usa a autenticación nativa que se mostra a continuación."
   invalid_token:    "\x0304✗\x03 O token non é válido ou caducou. Use \x0303/msg %bot% REGISTER\x03 para comezar de novo."
@@ -59,6 +61,7 @@ resend:
   syntax:           "RESEND"
   short:            "Reenviar o token de verificación ao seu correo electrónico."
   help:             "Reenvía o token de verificación ao enderezo de correo electrónico proporcionado\ndurante o rexistro. Só funciona se ten un rexistro pendente."
+  example:          "/msg %bot% RESEND"
   success:          "\x0307→\x03 Token de verificación reenviado a \x02%email%\x02."
   no_pending:       "\x0304✗\x03 Non ten ningún rexistro pendente para o que reenviar un token."
   throttled:        "\x0304✗\x03 Debe agardar \x02%minutes%\x02 minuto(s) antes de solicitar outro correo de verificación."
@@ -68,6 +71,7 @@ recover:
   syntax:           "RECOVER <alcume> [token]"
   short:            "Recuperar o seu alcume se perdeu o contrasinal."
   help:             "Recupera o acceso a un alcume rexistrado cando perdeu o contrasinal.\n1) \x0303RECOVER <alcume>\x03 — envíase un token ao correo electrónico do alcume.\n2) \x0303RECOVER <alcume> <token>\x03 — introduza o token do correo para restablecer o contrasinal.\nRecibirá un contrasinal temporal e o comando para cambialo."
+  example:          "/msg %bot% RECOVER alcume"
   email_sent:       "\x0307→\x03 Enviouse un token de recuperación a \x02%email_hint%\x02. Comprobe a súa caixa de entrada (e o cartafol de spam)."
   not_registered:   "\x0304✗\x03 O alcume \x02%nickname%\x02 non está rexistrado."
   pending:          "\x0304✗\x03 O alcume \x02%nickname%\x02 ten unha verificación de correo pendente."
@@ -84,6 +88,7 @@ identify:
   syntax:           "IDENTIFY <alcume> <contrasinal>"
   short:            "Identificarse como o propietario dun alcume."
   help:             "Autentica a súa sesión con %nickserv% usando o seu alcume e contrasinal.\nDespois dunha identificación exitosa recibirá o modo rexistrado \x02+r\x02\ne, se estaba usando un alcume de convidado, restauraráselle o seu alcume rexistrado."
+  example:          "/msg %bot% IDENTIFY alcume s3cret"
   native_syntax:    "/NICK <alcume>:<contrasinal> | /NICK <alcume>!<contrasinal>"
   native_short:     "Mostra a sintaxe de autenticación nativa por cambio de alcume."
   native_help:      "Este protocolo autentica as contas mediante cambios de alcume.\nUsa /NICK <alcume>:<contrasinal> ou, se o alcume está ocupado, /NICK <alcume>!<contrasinal>."
@@ -105,6 +110,7 @@ status:
   syntax:           "STATUS <alcume>"
   short:            "Mostrar o estado de rexistro dun alcume."
   help:             "Mostra o estado actual dun alcume: rexistrado, verificación pendente,\nsuspendido ou prohibido."
+  example:          "/msg %bot% STATUS alcume"
   header:           "\x02Estado do alcume \x0307%nickname%\x03\x02"
   unregistered:     "  Estado          : Non rexistrado"
   not_registered_offline: "  Estado          : \x0315Non rexistrado\x03"
@@ -129,6 +135,7 @@ info:
   syntax:           "INFO <alcume>"
   short:            "Mostrar información sobre un alcume rexistrado."
   help:             "Mostra detalles de rexistro dun alcume: data de rexistro, estado\nde conexión, última mensaxe de desconexión e enderezo de correo electrónico. O correo\nelectrónico só é visible para o propietario cando está identificado. Con PRIVATE ON só\no propietario e os operadores de IRC poden ver a información."
+  example:          "/msg %bot% INFO alcume"
   not_registered:   "\x0304✗\x03 O alcume \x02%nickname%\x02 non está rexistrado."
   private:          "\x0304✗\x03 A información do alcume \x02%nickname%\x02 é privada."
   header:           "\x02Información do alcume \x0307%nickname%\x03\x02"
@@ -164,18 +171,21 @@ set:
   syntax:           "SET <opción> <valor>"
   short:            "Cambiar as opcións do teu alcume."
   help:             "Modifica a configuración do seu alcume en %nickserv%.\nDebe estar identificado para usar este comando."
+  example:          "/msg %bot% SET PASSWORD n3wpass"
   unknown_option:   "\x0304✗\x03 Opción descoñecida \x02%option%\x02. Opcións dispoñibles: %options%."
 
   password:
     syntax:         "SET PASSWORD <novo_contrasinal>"
     short:          "Cambiar o contrasinal do seu alcume."
     help:           "Cambia o contrasinal do seu alcume. O novo contrasinal ten\nefecto inmediato. Escolla un contrasinal seguro de polo menos 6 caracteres\nque non use noutros servizos."
+    example:        "/msg %bot% SET PASSWORD novo_contrasinal123"
     success:        "\x0303✔\x03 O seu contrasinal foi actualizado con éxito."
 
   email:
     syntax:         "SET EMAIL <novo_correo-e> [token]"
     short:          "Cambiar o enderezo de correo electrónico ligado ao seu alcume (confirmación en dous pasos)."
     help:           "Cambio de correo electrónico en dous pasos por seguridade.\n1) \x0303SET EMAIL <novo_correo-e>\x03 — envíase un token ao seu correo actual.\n2) \x0303SET EMAIL <novo_correo-e> <token>\x03 — confirme co token recibido.\nO token caduca en 1 hora."
+    example:        "/msg %bot% SET EMAIL usuario@exemplo.com"
     success:        "\x0303✔\x03 O seu correo electrónico foi actualizado a \x02%email%\x02."
     pending_sent:   "\x0307→\x03 Enviouse un token de confirmación a \x02%current_email%\x02.\n  Para confirmar o cambio a \x02%new_email%\x02 execute:\n  \x0303/msg %bot% SET EMAIL %new_email% <token>\x03\n  O token caduca en 1 hora."
     invalid_token:  "\x0304✗\x03 O token non é válido ou caducou. Solicite un novo con \x0303SET EMAIL <novo_correo-e>\x03."
@@ -184,6 +194,7 @@ set:
     syntax:         "SET LANGUAGE <código>"
     short:          "Cambiar o idioma que os servizos usan para comunicarse con vostede."
     help:           "Cambia o idioma que %nickserv% e outros servizos usan ao falar con vostede.\nIdiomas dispoñibles:\n  \x02ca\x02 (catalán)\n  \x02de\x02 (alemán)\n  \x02el\x02 (grego)\n  \x02en\x02 (inglés)\n  \x02es\x02 (español)\n  \x02eu\x02 (éuscaro)\n  \x02fr\x02 (francés)\n  \x02gl\x02 (galego)\n  \x02it\x02 (italiano)\n  \x02nl\x02 (neerlandés)\n  \x02pl\x02 (polaco)\n  \x02pt\x02 (portugués)\n  \x02ro\x02 (romanés)\n  \x02tr\x02 (turco)"
+    example:        "/msg %bot% SET LANGUAGE gl"
     success:        "\x0303✔\x03 Idioma cambiado a \x02%language%\x02."
     invalid:        "\x0304✗\x03 Idioma non soportado. Idiomas dispoñibles: %languages%."
 
@@ -191,6 +202,7 @@ set:
     syntax:         "SET TIMEZONE <fuso_horario>"
     short:          "Establecer o fuso horario usado cando se mostran datas."
     help:           "Establece o fuso horario que usa %nickserv% cando mostra datas.\nUse \x02HELP SET TIMEZONE\x02 para o índice de rexións; \x02HELP SET TIMEZONE <rexión>\x02 (p.ex. Europe) para os fusos horarios desa rexión. Use \x02OFF\x02 para limpar."
+    example:        "/msg %bot% SET TIMEZONE Europe/Madrid"
     success:        "\x0303✔\x03 Fuso horario establecido en \x02%timezone%\x02. As datas mostraranse neste fuso."
     cleared:        "\x0303✔\x03 Fuso horario limpado. As datas usarán o valor predeterminado da rede."
     invalid:        "\x0304✗\x03 Fuso horario non válido \x02%timezone%\x02. Use un identificador válido (p.ex. UTC, Europe/Madrid)."
@@ -199,6 +211,7 @@ set:
     syntax:         "SET PRIVATE {ON|OFF}"
     short:          "Activar ou desactivar a privacidade da información do seu alcume."
     help:           "Controla a visibilidade da información do seu alcume no comando INFO.\nCon \x02PRIVATE ON\x02 só vostede e os operadores de IRC poden ver os seus detalles.\nCon \x02PRIVATE OFF\x02 a súa información é pública para todos."
+    example:        "/msg %bot% SET PRIVATE ON"
     on:             "\x0303✔\x03 A información do seu alcume é agora \x02privada\x02."
     off:            "\x0303✔\x03 A información do seu alcume é agora \x02pública\x02."
 
@@ -206,6 +219,7 @@ set:
     syntax:         "SET MSG {ON|OFF}"
     short:          "Usar PRIVMSG (ON) ou NOTICE (OFF) para as respostas do servizo."
     help:           "Controla como %nickserv% e outros servizos envían mensaxes a vostede.\nCon \x02MSG ON\x02 as respostas envíanse como \x02PRIVMSG\x02 (algúns clientes poden provocar respostas ou notificacións).\nCon \x02MSG OFF\x02 as respostas envíanse como \x02NOTICE\x02 (predeterminado; normalmente sen resposta automática)."
+    example:        "/msg %bot% SET MSG ON"
     on:             "\x0303✔\x03 As mensaxes do servizo enviaranse agora como \x02PRIVMSG\x02."
     off:            "\x0303✔\x03 As mensaxes do servizo enviaranse agora como \x02NOTICE\x02."
 
@@ -213,6 +227,7 @@ set:
     syntax:         "SET VHOST [vhost]"
     short:          "Establecer ou limpar o seu nome de servidor virtual (hostname mostrado)."
     help:           "Establece un nome de servidor personalizado que outros ven cando está identificado.\nUse \x02SET VHOST\x02 sen valor para limpalo. Só letras (a-z, A-Z), díxitos, guión e punto;\nsen guión nin punto ao inicio/final de cada bloque; máx. 48 caracteres. Único por alcume."
+    example:        "/msg %bot% SET VHOST usuarios.exemplo.com"
     success:        "\x0303✔\x03 O seu host virtual foi establecido como \x02%vhost%\x02."
     cleared:        "\x0303✔\x03 O seu host virtual foi limpado."
     invalid:        "\x0304✗\x03 Vhost non válido. Só letras, díxitos, guión e punto (non ao inicio/final de bloque); máx. 48 caracteres."
@@ -233,46 +248,51 @@ saset:
     SASET EMAIL: Cambia o correo electrónico directamente (sen validación de token).
 
     Este comando require permiso IRCop: nickserv.saset
-
-    Sintaxe: SASET <alcume> <opción> <valor>
-    Exemplo: SASET Usuario PASSWORD novo_contrasinal
+  example:          "/msg %bot% SASET Usuario PASSWORD novo_contrasinal"
   unknown_option:   "\x0304✗\x03 Opción descoñecida \x02%option%\x02. Opcións dispoñibles: %options%."
   cannot_modify_oper: "\x0304✗\x03 Non se pode modificar un alcume de Operador de IRC."
 
   password:
     syntax:         "SASET <alcume> PASSWORD <novo_contrasinal>"
     short:          "Cambiar o contrasinal dun alcume."
-    help:           "Cambia o contrasinal doutro alcume.\nO cambio é inmediato.\n\nSintaxe: SASET <alcume> PASSWORD <novo_contrasinal>\nExemplo: SASET Usuario PASSWORD novo_contrasinal123"
+    help:           "Cambia o contrasinal doutro alcume.\nO cambio é inmediato."
+    example:        "/msg %bot% SASET Usuario PASSWORD novo_contrasinal123"
 
   email:
     syntax:         "SASET <alcume> EMAIL <novo_correo>"
     short:          "Cambiar o correo electrónico dun alcume."
-    help:           "Cambia o correo electrónico doutro alcume.\nNon se envía confirmación—o cambio é inmediato.\n\nSintaxe: SASET <alcume> EMAIL <novo_correo>\nExemplo: SASET Usuario EMAIL usuario@exemplo.com"
+    help:           "Cambia o correo electrónico doutro alcume.\nNon se envía confirmación—o cambio é inmediato."
+    example:        "/msg %bot% SASET Usuario EMAIL usuario@exemplo.com"
 
   language:
     syntax:         "SASET <alcume> LANGUAGE <código>"
     short:          "Cambiar o idioma dun alcume."
-    help:           "Cambia o idioma doutro alcume.\nIdiomas dispoñibles: en (inglés), es (español).\n\nSintaxe: SASET <alcume> LANGUAGE <código>\nExemplo: SASET Usuario LANGUAGE gl"
+    help:           "Cambia o idioma doutro alcume.\nIdiomas dispoñibles: en (inglés), es (español)."
+    example:        "/msg %bot% SASET Usuario LANGUAGE gl"
 
   timezone:
     syntax:         "SASET <alcume> TIMEZONE <fuso_horario|OFF>"
     short:          "Cambiar o fuso horario dun alcume."
-    help:           "Establece ou limpa o fuso horario doutro alcume.\nUse OFF para limpalo.\n\nSintaxe: SASET <alcume> TIMEZONE <fuso_horario>\nExemplo: SASET Usuario TIMEZONE Europe/Madrid"
+    help:           "Establece ou limpa o fuso horario doutro alcume.\nUse OFF para limpalo."
+    example:        "/msg %bot% SASET Usuario TIMEZONE Europe/Madrid"
 
   private:
     syntax:         "SASET <alcume> PRIVATE {ON|OFF}"
     short:          "Cambiar a privacidade dun alcume."
-    help:           "Activa ou desactiva a privacidade da información doutro alcume.\n\nSintaxe: SASET <alcume> PRIVATE {ON|OFF}\nExemplo: SASET Usuario PRIVATE ON"
+    help:           "Activa ou desactiva a privacidade da información doutro alcume."
+    example:        "/msg %bot% SASET Usuario PRIVATE ON"
 
   msg:
     syntax:         "SASET <alcume> MSG {ON|OFF}"
     short:          "Cambiar a preferencia de mensaxes dun alcume."
-    help:           "Establece se outro alcume recibe as respostas como PRIVMSG (ON) ou NOTICE (OFF).\n\nSintaxe: SASET <alcume> MSG {ON|OFF}\nExemplo: SASET Usuario MSG ON"
+    help:           "Establece se outro alcume recibe as respostas como PRIVMSG (ON) ou NOTICE (OFF)."
+    example:        "/msg %bot% SASET Usuario MSG ON"
 
   vhost:
     syntax:         "SASET <alcume> VHOST [vhost]"
     short:          "Cambiar o host virtual dun alcume."
-    help:           "Establece ou limpa o host virtual doutro alcume.\nUse \x02SASET <alcume> VHOST\x02 sen valor para limpalo.\n\nSintaxe: SASET <alcume> VHOST [vhost]\nExemplo: SASET Usuario VHOST usuarios.exemplo.com"
+    help:           "Establece ou limpa o host virtual doutro alcume.\nUse \x02SASET <alcume> VHOST\x02 sen valor para limpalo."
+    example:        "/msg %bot% SASET Usuario VHOST usuarios.exemplo.com"
 
 # --- HELP -------------------------------------------------------------------
 help:
@@ -297,6 +317,7 @@ help:
   set_sub_syntax: "HELP %command% <opción>"
   set_sub_footer: "%marker% Usa /msg %bot% \x02\x0303%syntax%\x03\x0F para obter máis información."
   syntax_label: "Sintaxe: \x02\x0303%syntax%\x03\x0F"
+  example_label: "Exemplo: \x02\x0303%example%\x03\x0F"
   footer: "\x0314─────────────────────────────\x03\x0F"
   group_header: "\x0310  ◆ %group%\x03\x0F"
   subgroup_header: "\x0310  ◆ %group%\x03\x0F"
@@ -334,9 +355,7 @@ userip:
 
     Este comando mostra información sensible do alcume.
     Úseo con responsabilidade.
-
-    Sintaxe: USERIP <alcume>
-    Exemplo: USERIP AlgúnUsuario
+  example:          "/msg %bot% USERIP AlgúnUsuario"
   not_online:       "\x0304✗\x03 O alcume \x02%nickname%\x02 non está conectado."
   result:           "\x0307ℹ\x03 Alcume: \x02%nickname%\x02 | IP: \x0307%ip%\x03 | Host: \x0307%host%\x03"
 
@@ -346,6 +365,7 @@ whoip:
   help:             |
     Mostra os alcumes rexistrados cuxa última conexión identificada empregou este enderezo IP.
     O enderezo gardado pode estar desactualizado.
+  example:          "/msg %bot% WHOIP 203.0.113.42"
   empty:            "Non hai alcumes rexistrados que coincidan con este enderezo IP."
   header:           "Alcumes coincidentes:"
 
@@ -361,12 +381,7 @@ suspend:
 
     Os usuarios suspendidos non poden identificarse co seu alcume.
     Os operadores de IRC e os usuarios root non poden ser suspendidos.
-
-    Sintaxe: SUSPEND <alcume> <duración> <motivo>
-    Exemplos:
-      SUSPEND MalUsuario 7d Spam en #axuda
-      SUSPEND Abusador 30d Flood reiterado
-      SUSPEND UsuarioProblemático 0 Permaban por evasión
+  example:          "/msg %bot% SUSPEND MalUsuario 7d Spam en #axuda"
   success:            "\x0303✔\x03 O alcume \x02%nickname%\x02 foi suspendido ata \x02%duration%\x02."
   already_suspended:  "\x0304✗\x03 O alcume \x02%nickname%\x02 xa está suspendido."
   not_registered:     "\x0304✗\x03 O alcume \x02%nickname%\x02 non está rexistrado."
@@ -383,9 +398,7 @@ unsuspend:
   short:            "Eliminar a suspensión dun alcume."
   help:             |
     Elimina unha suspensión activa dun alcume, permitindo que o propietario se identifique de novo.
-
-    Sintaxe: UNSUSPEND <alcume>
-    Exemplo: UNSUSPEND AlgúnUsuario
+  example:          "/msg %bot% UNSUSPEND AlgúnUsuario"
   success:          "\x0303✔\x03 A suspensión foi levantada de \x02%nickname%\x02."
   not_registered:   "\x0304✗\x03 O alcume \x02%nickname%\x02 non está rexistrado."
   not_suspended:    "\x0304✗\x03 O alcume \x02%nickname%\x02 non está suspendido."
@@ -401,9 +414,7 @@ rename:
     O formato do novo alcume usa o prefixo de convidado configurado (%prefix%).
 
     Este comando require o permiso IRCop: nickserv.rename
-
-    Sintaxe: RENAME <alcume>
-    Exemplo: RENAME Problemático
+  example:          "/msg %bot% RENAME Guest-4F21AB"
   not_online:        "\x0304✗\x03 O alcume \x02%nickname%\x02 non está conectado."
   cannot_rename_root: "\x0304✗\x03 Non se pode renomear o usuario root \x02%nickname%\x02."
   cannot_rename_oper: "\x0304✗\x03 Non se pode renomear o operador de IRC \x02%nickname%\x02."
@@ -423,9 +434,7 @@ drop:
     Non pode eliminar o seu propio alcume.
 
     Este comando require o permiso IRCop: nickserv.drop
-
-    Sintaxe: DROP <alcume>
-    Exemplo: DROP ContaAntiga
+  example:          "/msg %bot% DROP ContaAntiga"
   not_registered:     "\x0304✗\x03 O alcume \x02%nickname%\x02 non está rexistrado."
   suspended:         "\x0304✗\x03 O alcume \x02%nickname%\x02 está suspendido. Reactíveo primeiro."
   forbidden:         "\x0304✗\x03 O alcume \x02%nickname%\x02 está prohibido."
@@ -442,6 +451,7 @@ restore:
   syntax:           "RESTORE <alcume>"
   short:            "Restaurar un alcume pendente de eliminación."
   help:             "Restaura un alcume que foi eliminado manualmente e aínda está dentro do período de graza. Require permiso IRCop: nickserv.restore."
+  example:          "/msg %bot% RESTORE alcume"
   success:          "\x0303✓\x03 O alcume \x02%nickname%\x02 foi restaurado."
   not_registered:   "\x0304✗\x03 O alcume \x02%nickname%\x02 non está rexistrado."
   not_pending_deletion: "\x0304✗\x03 O alcume \x02%nickname%\x02 non está pendente de eliminación."
@@ -460,9 +470,7 @@ forbid:
     Os usuarios root, operadores de IRC e alcumes de servizo non poden ser prohibidos.
 
     Este comando require o permiso IRCop: nickserv.forbid
-
-    Sintaxe: FORBID <alcume> <motivo>
-    Exemplo: FORBID MalAlcume Violacións reiteradas das políticas
+  example:          "/msg %bot% FORBID MalAlcume Violacións reiteradas das políticas"
   success:            "\x0303✔\x03 O alcume \x02%nickname%\x02 foi prohibido."
   updated:            "\x0303✔\x03 O motivo de prohibición de \x02%nickname%\x02 foi actualizado."
   reason_required:    "\x0304✗\x03 Debe proporcionar un motivo para a prohibición."
@@ -478,9 +486,7 @@ unforbid:
     Elimina unha prohibición de alcume, permitindo que o alcume poida ser usado de novo.
 
     Este comando require o permiso IRCop: nickserv.forbid
-
-    Sintaxe: UNFORBID <alcume>
-    Exemplo: UNFORBID AlgúnAlcume
+  example:          "/msg %bot% UNFORBID AlgúnAlcume"
   success:          "\x0303✔\x03 O alcume \x02%nickname%\x02 xa non está prohibido."
   not_forbidden:    "\x0304✗\x03 O alcume \x02%nickname%\x02 non está prohibido."
 
@@ -493,7 +499,7 @@ forbidvhost:
     coincidentes mediante %bot% SET VHOST.
 
     Comodíns: * coincide con calquera secuencia, ? coincide cun só carácter.
-    Exemplo: *.pirateado.com bloquea calquera vhost que remate en .pirateado.com
+    Un patrón como *.pirateado.com bloquea calquera vhost que remate en .pirateado.com
 
     Este comando require o permiso IRCop: nickserv.forbidvhost
 
@@ -501,6 +507,7 @@ forbidvhost:
       ADD <patrón>    Engadir un patrón prohibido
       DEL <patrón>    Eliminar un patrón prohibido
       LIST            Mostrar todos os patróns prohibidos
+  example:          "/msg %bot% FORBIDVHOST ADD *.pirateado.com"
 
   unknown_sub: "\x0304✗\x03 Subcomando descoñecido \x02%sub%\x02. Use ADD, DEL ou LIST."
 
@@ -512,9 +519,7 @@ forbidvhost:
       poderán establecer vhosts que coincidan con este patrón mediante SET VHOST.
 
       Comodíns: * coincide con calquera secuencia, ? coincide cun só carácter.
-
-      Sintaxe: FORBIDVHOST ADD <patrón>
-      Exemplo: FORBIDVHOST ADD *.pirateado.com
+    example:     "/msg %bot% FORBIDVHOST ADD *.pirateado.com"
     done:            "\x0303✓\x03 Patrón de vhost prohibido engadido: \x02%pattern%\x02"
     already_exists:  "\x0304✗\x03 O patrón \x02%pattern%\x02 xa existe."
     invalid:          "\x0304✗\x03 Formato de patrón de vhost non válido."
@@ -524,9 +529,7 @@ forbidvhost:
     short:       "Eliminar un patrón de vhost prohibido."
     help:        |
       Elimina un patrón da lista de vhosts prohibidos.
-
-      Sintaxe: FORBIDVHOST DEL <patrón>
-      Exemplo: FORBIDVHOST DEL *.pirateado.com
+    example:     "/msg %bot% FORBIDVHOST DEL *.pirateado.com"
     done:        "\x0303✓\x03 Patrón de vhost prohibido eliminado: \x02%pattern%\x02"
     not_found:   "\x0304✗\x03 Patrón \x02%pattern%\x02 non atopado."
 
@@ -535,8 +538,7 @@ forbidvhost:
     syntax:      "FORBIDVHOST LIST"
     help:        |
       Mostra todos os patróns de vhost prohibidos.
-
-      Sintaxe: FORBIDVHOST LIST
+    example:     "/msg %bot% FORBIDVHOST LIST"
     header:      "\x0307ℹ\x03 Patróns de vhost prohibidos (\x02%count%\x02):"
     entry:       "  %index%. \x0304%pattern%\x03 — por %nickname% (%date%)"
     empty:       "\x0307ℹ\x03 Non hai patróns de vhost prohibidos."
@@ -554,25 +556,13 @@ history:
       SUSPEND, UNSUSPEND, SET PASSWORD, SET EMAIL, SASET PASSWORD,
       SASET EMAIL, RECOVER
 
-    Sintaxe: HISTORY <alcume> ADD <mensaxe>
-             HISTORY <alcume> DEL <id>
-             HISTORY <alcume> VIEW [PÁXINA|ALL]
-             HISTORY <alcume> CLEAR
-
-    Exemplos:
-      HISTORY AlgúnAlcume VIEW
-      HISTORY AlgúnAlcume ADD Nota manual sobre este usuario
-      HISTORY AlgúnAlcume VIEW 2
-      HISTORY AlgúnAlcume VIEW ALL
-      HISTORY AlgúnAlcume DEL 123
-      HISTORY AlgúnAlcume CLEAR
-
     Use VIEW para ver o historial (mostra 3 entradas por defecto).
     Use VIEW PÁXINA 2 para ver a seguinte páxina.
     Use VIEW ALL para ver o historial completo.
     Use ADD para engadir unha entrada manual.
     Use DEL para eliminar unha entrada específica polo ID.
     Use CLEAR para eliminar todas as entradas do historial.
+  example:          "/msg %bot% HISTORY AlgúnAlcume VIEW"
   not_registered:   "\x0304✗\x03 O alcume \x02%nickname%\x02 non está rexistrado."
   unknown_operator: "(descoñecido)"
 
@@ -581,9 +571,7 @@ history:
     short:      "Engadir unha entrada manual ao historial."
     help:        |
       Engade unha entrada manual ao historial do alcume.
-
-      Sintaxe: HISTORY <alcume> ADD <mensaxe>
-      Exemplo: HISTORY AlgúnAlcume ADD Usuario denunciado por spam
+    example:     "/msg %bot% HISTORY AlgúnAlcume ADD Usuario denunciado por spam"
     success:    "\x0303✔\x03 Entrada do historial engadida para \x02%nickname%\x02."
 
   del:
@@ -591,9 +579,7 @@ history:
     short:      "Eliminar unha entrada do historial polo ID."
     help:        |
       Elimina unha entrada específica do historial polo seu ID.
-
-      Sintaxe: HISTORY <alcume> DEL <id>
-      Exemplo: HISTORY AlgúnAlcume DEL 42
+    example:     "/msg %bot% HISTORY AlgúnAlcume DEL 42"
     success:    "\x0303✔\x03 Entrada do historial \x02%id%\x02 eliminada."
     not_found:  "\x0304✗\x03 Entrada do historial \x02%id%\x02 non atopada."
     invalid_id: "\x0304✗\x03 ID de entrada non válido: \x02%id%\x02."
@@ -604,13 +590,10 @@ history:
     help:        |
       Mostra o historial de accións do alcume.
 
-      Sintaxe: HISTORY <alcume> VIEW
-               HISTORY <alcume> VIEW PÁXINA
-               HISTORY <alcume> VIEW ALL
-
       Por defecto mostra 3 entradas cada vez.
       Use VIEW 2 para ver a segunda páxina.
       Use VIEW ALL para ver o historial completo.
+    example:     "/msg %bot% HISTORY AlgúnAlcume VIEW"
     header:     "\x02Historial de \x0307%nickname%\x03\x02 (mostrando %start%-%end% de %total%):"
     entry:       "#%id% [%date%] \x0303%action%\x03 por %operator% — %message%"
     extra:       "  Extra \x0307→\x03 %extra%"
@@ -623,9 +606,7 @@ history:
     help:        |
       Elimina todas as entradas do historial do alcume especificado.
       Esta acción non se pode desfacer.
-
-      Sintaxe: HISTORY <alcume> CLEAR
-      Exemplo: HISTORY AlgúnAlcume CLEAR
+    example:     "/msg %bot% HISTORY AlgúnAlcume CLEAR"
     success:    "\x0303✔\x03 Limpadas \x02%count%\x02 entradas do historial de \x02%nickname%\x02."
 
 # --- History message translations (used when viewing history) ---
@@ -659,11 +640,7 @@ noexpire:
     Cando está OFF, aplícanse as regras normais de caducidade.
 
     Só os IRCops co permiso 'nickserv.noexpire' poden usar este comando.
-
-    Sintaxe: NOEXPIRE <alcume> {ON|OFF}
-    Exemplos:
-      NOEXPIRE UsuarioImportante ON
-      NOEXPIRE UsuarioImportante OFF
+  example:          "/msg %bot% NOEXPIRE UsuarioImportante ON"
   success_on:       "\x0303✔\x03 O alcume \x02%nickname%\x02 está agora protexido contra a caducidade."
   success_off:      "\x0303✔\x03 O alcume \x02%nickname%\x02 caducará normalmente agora."
   not_registered:   "\x0304✗\x03 O alcume \x02%nickname%\x02 non está rexistrado."
@@ -675,6 +652,7 @@ list:
   syntax: "LIST <patrón> [páxina]"
   short: "Lista alcumes rexistrados que coinciden cun patrón."
   help: "Lista os alcumes rexistrados que coinciden co patrón indicado. O comodín * coincide con calquera secuencia de caracteres. A páxina é opcional e comeza en 1."
+  example: "/msg %bot% LIST alcume*"
   header: "Alcume | Rexistro | Última conexión | IP | Estado"
   row: "%nickname% | %registered% | %last_seen% | %ip% | %status%"
   page: "Páxina %page%/%pages% — %total% coincidencias"
@@ -696,4 +674,5 @@ saregister:
   syntax:           "SAREGISTER <alcume> <contrasinal> <email>"
   short:            "Rexistra un alcume no nome doutro usuario."
   help:             "Rexistra un alcume no nome doutro usuario. A conta créase xa activa:\nsáltanse a verificación por correo e o límite de frecuencia.\nO enderezo séguise validando e debe estar libre.\nEsta orde require permiso de operador."
+  example:          "/msg %bot% SAREGISTER alcume s3cret ana@example.com"
   done:             "\x0303✔\x03 O alcume \x02%nickname%\x02 foi rexistrado."

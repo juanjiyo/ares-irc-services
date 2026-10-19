@@ -25,6 +25,7 @@ register:
   syntax:           "REGISTER <şifre> <e-posta>"
   short:            "Rumuzunuzu hizmetlere kaydedin."
   help:             "Mevcut rumuzunuzun kaydını başlatır. Sağlanan e-posta adresine bir doğrulama tokenı\ngönderilecektir. Kaydı \x0303/msg %bot% VERIFY <token>\x03 komutunu çalıştırarak\ntamamlayın. Token 1 saat içinde sona erer.\nGelmezse, spam klasörünüzü kontrol edin veya \x0303RESEND\x03 kullanın."
+  example:          "/msg %bot% REGISTER s3cret ana@example.com"
   pending:          "\x0307→\x03 \x02%email%\x02 adresine bir doğrulama tokenı gönderildi.\n  Kaydı tamamlamak için \x0303/msg %bot% VERIFY <token>\x03 komutunu çalıştırın.\n  Almadınız mı? Spam'i kontrol edin veya \x0303/msg %bot% RESEND\x03 kullanın.\n  Token \x021 saat\x02 içinde sona erecek."
   registered:       "\x0303✔\x03 \x02%nickname%\x02 takma adı kaydedildi."
   already_registered: "\x0304✗\x03 \x02%nickname%\x02 rumuzu zaten kayıtlı."
@@ -41,6 +42,7 @@ verify:
   syntax:           "VERIFY <token>"
   short:            "E-posta adresinizi onaylayın ve rumuzunuzu etkinleştirin."
   help:             "E-postanıza gönderilen tokenı doğrulayarak kaydı tamamlar.\nToken, kayıt anından itibaren 1 saat geçerlidir."
+  example:          "/msg %bot% VERIFY 4XZ9KQ2M"
   success:          "\x0303✔\x03 \x02%nickname%\x02 rumuzu başarıyla kaydedildi ve artık kimliğiniz doğrulandı."
   success_native:   "\x0303✔\x03 \x02%nickname%\x02 rumuzu başarıyla kaydedildi. Aşağıda gösterilen yerel kimlik doğrulamayı kullanın."
   invalid_token:    "\x0304✗\x03 Token geçersiz veya süresi dolmuş. Yeniden başlamak için \x0303/msg %bot% REGISTER\x03 kullanın."
@@ -51,6 +53,7 @@ resend:
   syntax:           "RESEND"
   short:            "Doğrulama tokenını e-postanıza yeniden gönderin."
   help:             "Kayıt sırasında sağlanan e-posta adresine doğrulama tokenını yeniden gönderir.\nYalnızca bekleyen bir kaydınız varsa çalışır."
+  example:          "/msg %bot% RESEND"
   success:          "\x0307→\x03 Doğrulama tokenı \x02%email%\x02 adresine yeniden gönderildi."
   no_pending:       "\x0304✗\x03 Token göndermek için bekleyen bir kaydınız yok."
   throttled:        "\x0304✗\x03 Başka bir doğrulama e-postası istemeden önce \x02%minutes%\x02 dakika beklemelisiniz."
@@ -60,6 +63,7 @@ recover:
   syntax:           "RECOVER <nickname> [token]"
   short:            "Şifrenizi kaybettiyseniz rumuzunuzu kurtarın."
   help:             "Şifrenizi kaybettiğinizde kayıtlı bir rumuza erişimi kurtarır.\n1) \x0303RECOVER <nickname>\x03 — rumuzun e-postasına bir token gönderilir.\n2) \x0303RECOVER <nickname> <token>\x03 — şifrenizi sıfırlamak için e-postadan gelen tokenı girin.\nArdından geçici bir şifre ve değiştirme komutunu alacaksınız."
+  example:          "/msg %bot% RECOVER rumuz"
   email_sent:       "\x0307→\x03 \x02%email_hint%\x02 adresine bir kurtarma tokenı gönderildi. Gelen kutunuzu (ve spam klasörünü) kontrol edin."
   not_registered:   "\x0304✗\x03 \x02%nickname%\x02 rumuzu kayıtlı değil."
   pending:          "\x0304✗\x03 \x02%nickname%\x02 rumuzu e-posta doğrulaması bekliyor."
@@ -76,6 +80,7 @@ identify:
   syntax:           "IDENTIFY <nickname> <şifre>"
   short:            "Kendinizi bir rumuzun sahibi olarak tanımlayın."
   help:             "Rumuz ve şifrenizi kullanarak oturumunuzu %nickserv% ile doğrular.\nBaşarılı bir kimlik doğrulamadan sonra \x02+r\x02 kayıtlı modunu alacaksınız\nve, misafir rumuzu kullanıyorsanız, kayıtlı rumuzunuz geri yüklenecektir."
+  example:          "/msg %bot% IDENTIFY rumuz s3cret"
   native_syntax:    "/NICK <nickname>:<şifre> | /NICK <nickname>!<şifre>"
   native_short:     "Yerel rumuz kimlik doğrulama sözdizimini gösterir."
   native_help:      "Bu protokol hesapları rumuz değişiklikleriyle doğrular.\n/NICK <nickname>:<şifre> kullanın veya rumuz kullanımdaysa /NICK <nickname>!<şifre> kullanın."
@@ -97,6 +102,7 @@ status:
   syntax:           "STATUS <nickname>"
   short:            "Bir rumuzun kayıt durumunu gösterin."
   help:             "Bir rumuzun mevcut durumunu gösterir: kayıtlı, doğrulama bekliyor,\naskıya alınmış veya yasaklanmış."
+  example:          "/msg %bot% STATUS rumuz"
   header:           "\x02\x0307%nickname%\x03 rumuzunun durumu\x02"
   unregistered:     "  Durum           : Kayıtlı değil"
   not_registered_offline: "  Durum           : \x0315Kayıtlı değil\x03"
@@ -121,6 +127,7 @@ info:
   syntax:           "INFO <nickname>"
   short:            "Kayıtlı bir rumuz hakkında bilgi gösterin."
   help:             "Bir rumuz için kayıt bilgilerini gösterir: kayıt tarihi, bağlantı\ndurumu, son çıkış mesajı ve e-posta adresi. E-posta yalnızca\nkimlik doğrulandığında sahibine görünür. PRIVATE AÇIK olduğunda\nbilgileri yalnızca sahibi ve IRC Operatörleri görebilir."
+  example:          "/msg %bot% INFO rumuz"
   not_registered:   "\x0304✗\x03 \x02%nickname%\x02 rumuzu kayıtlı değil."
   private:          "\x0304✗\x03 \x02%nickname%\x02 rumuzunun bilgileri gizlidir."
   header:           "\x02\x0307%nickname%\x03 rumuzu için bilgi\x02"
@@ -156,18 +163,21 @@ set:
   syntax:           "SET <seçenek> <değer>"
   short:            "Rumuz seçeneklerinizi değiştirin."
   help:             "%nickserv% rumuz ayarlarınızı değiştirir.\nBu komutu kullanmak için kimliğiniz doğrulanmış olmalıdır."
+  example:          "/msg %bot% SET PASSWORD n3wpass"
   unknown_option:   "\x0304✗\x03 Bilinmeyen seçenek \x02%option%\x02. Kullanılabilir seçenekler: %options%."
 
   password:
     syntax:         "SET PASSWORD <yeni_şifre>"
     short:          "Rumuz şifrenizi değiştirin."
     help:           "Rumuzunuzun şifresini değiştirir. Yeni şifre hemen geçerli olur.\nEn az 6 karakterden oluşan, başka hizmetlerde kullanmadığınız\ngüçlü bir şifre seçin."
+    example:        "/msg %bot% SET PASSWORD yenişifre123"
     success:        "\x0303✔\x03 Şifreniz başarıyla güncellendi."
 
   email:
     syntax:         "SET EMAIL <yeni_e-posta> [token]"
     short:          "Rumuzunuza bağlı e-posta adresini değiştirin (iki aşamalı onay)."
     help:           "Güvenlik için iki aşamada e-posta değişikliği.\n1) \x0303SET EMAIL <yeni_e-posta>\x03 — mevcut e-postanıza bir token gönderilir.\n2) \x0303SET EMAIL <yeni_e-posta> <token>\x03 — alınan token ile onaylayın.\nToken 1 saat içinde sona erer."
+    example:        "/msg %bot% SET EMAIL kullanıcı@örnek.com"
     success:        "\x0303✔\x03 E-postanız \x02%email%\x02 olarak güncellendi."
     pending_sent:   "\x0307→\x03 \x02%current_email%\x02 adresine bir onay tokenı gönderildi.\n  \x02%new_email%\x02 adresine değişikliği onaylamak için çalıştırın:\n  \x0303/msg %bot% SET EMAIL %new_email% <token>\x03\n  Token 1 saat içinde sona erer."
     invalid_token:  "\x0304✗\x03 Token geçersiz veya süresi dolmuş. \x0303SET EMAIL <yeni_e-posta>\x03 ile yeni bir tane isteyin."
@@ -176,6 +186,7 @@ set:
     syntax:         "SET LANGUAGE <kod>"
     short:          "Hizmetlerin sizinle iletişim kurarken kullandığı dili değiştirin."
     help:           "%nickserv% ve diğer hizmetlerin sizinle konuşurken kullandığı dili değiştirir.\nKullanılabilir diller:\n  \x02ca\x02 (Katalanca)\n  \x02de\x02 (Almanca)\n  \x02el\x02 (Yunanca)\n  \x02en\x02 (İngilizce)\n  \x02es\x02 (İspanyolca)\n  \x02eu\x02 (Baskça)\n  \x02fr\x02 (Fransızca)\n  \x02gl\x02 (Galiçyaca)\n  \x02it\x02 (İtalyanca)\n  \x02nl\x02 (Felemenkçe)\n  \x02pl\x02 (Lehçe)\n  \x02pt\x02 (Portekizce)\n  \x02ro\x02 (Rumence)\n  \x02tr\x02 (Türkçe)"
+    example:        "/msg %bot% SET LANGUAGE tr"
     success:        "\x0303✔\x03 Dil \x02%language%\x02 olarak değiştirildi."
     invalid:        "\x0304✗\x03 Desteklenmeyen dil. Kullanılabilir diller: %languages%."
 
@@ -183,6 +194,7 @@ set:
     syntax:         "SET TIMEZONE <zaman_dilimi>"
     short:          "Tarihleri görüntülerken kullanılacak zaman dilimini ayarlayın."
     help:           "%nickserv% tarihleri gösterirken kullanılacak zaman dilimini ayarlar.\nBölge dizini için \x02HELP SET TIMEZONE\x02; bölgenin zaman dilimleri için \x02HELP SET TIMEZONE <bölge>\x02 (örn. Europe) kullanın. Temizlemek için \x02OFF\x02 kullanın."
+    example:        "/msg %bot% SET TIMEZONE Europe/Istanbul"
     success:        "\x0303✔\x03 Zaman dilimi \x02%timezone%\x02 olarak ayarlandı. Tarihler bu zaman diliminde gösterilecek."
     cleared:        "\x0303✔\x03 Zaman dilimi temizlendi. Tarihler ağ varsayılanını kullanacak."
     invalid:        "\x0304✗\x03 Geçersiz zaman dilimi \x02%timezone%\x02. Geçerli bir tanımlayıcı kullanın (örn. UTC, Europe/Istanbul)."
@@ -191,6 +203,7 @@ set:
     syntax:         "SET PRIVATE {ON|OFF}"
     short:          "Rumuz bilgilerinizin gizliliğini etkinleştirin veya devre dışı bırakın."
     help:           "INFO komutunda rumuz bilgilerinizin görünürlüğünü kontrol eder.\n\x02PRIVATE AÇIK\x02 ile bilgilerinizi yalnızca siz ve IRC Operatörleri görebilir.\n\x02PRIVATE KAPALI\x02 ile bilgileriniz herkese açıktır."
+    example:        "/msg %bot% SET PRIVATE ON"
     on:             "\x0303✔\x03 Rumuz bilgileriniz artık \x02gizlidir\x02."
     off:            "\x0303✔\x03 Rumuz bilgileriniz artık \x02herkese açıktır\x02."
 
@@ -198,6 +211,7 @@ set:
     syntax:         "SET MSG {ON|OFF}"
     short:          "Hizmet yanıtları için PRIVMSG (AÇIK) veya NOTICE (KAPALI) kullanın."
     help:           "%nickserv% ve diğer hizmetlerin size nasıl mesaj göndereceğini kontrol eder.\n\x02MSG AÇIK\x02 ile yanıtlar \x02PRIVMSG\x02 olarak gönderilir (bazı istemciler otomatik yanıt/uyarı tetikleyebilir).\n\x02MSG KAPALI\x02 ile yanıtlar \x02NOTICE\x02 olarak gönderilir (varsayılan; genellikle otomatik yanıt olmaz)."
+    example:        "/msg %bot% SET MSG ON"
     on:             "\x0303✔\x03 Hizmet mesajları artık \x02PRIVMSG\x02 olarak gönderilecek."
     off:            "\x0303✔\x03 Hizmet mesajları artık \x02NOTICE\x02 olarak gönderilecek."
 
@@ -205,6 +219,7 @@ set:
     syntax:         "SET VHOST [vhost]"
     short:          "Özel sanal ana makinenizi (görüntülenen host adı) ayarlayın veya temizleyin."
     help:           "Kimlik doğrulandığınızda başkalarının gördüğü özel bir host adı ayarlar.\nTemizlemek için \x02SET VHOST\x02 komutunu değer olmadan kullanın. Yalnızca harfler (a-z, A-Z), rakamlar, tire ve nokta;\nher bloğun başında/sonunda tire veya nokta olmaz; maks 48 karakter. Her rumuz için benzersiz."
+    example:        "/msg %bot% SET VHOST kullanıcılar.örnek.com"
     success:        "\x0303✔\x03 Sanal host'unuz \x02%vhost%\x02 olarak ayarlandı."
     cleared:        "\x0303✔\x03 Sanal host'unuz temizlendi."
     invalid:        "\x0304✗\x03 Geçersiz vhost. Yalnızca harfler, rakamlar, tire ve nokta (blok başında/sonunda olamaz); maks 48 karakter."
@@ -225,46 +240,51 @@ saset:
     SASET EMAIL: E-postayı doğrudan değiştirir (token doğrulaması olmadan).
 
     Bu komut IRCop izni gerektirir: nickserv.saset
-
-    Sözdizimi: SASET <rumuz> <seçenek> <değer>
-    Örnek: SASET Kullanıcı PASSWORD yenişifre
+  example:          "/msg %bot% SASET Kullanıcı PASSWORD yenişifre"
   unknown_option:   "\x0304✗\x03 Bilinmeyen seçenek \x02%option%\x02. Kullanılabilir seçenekler: %options%."
   cannot_modify_oper: "\x0304✗\x03 IRC Operatörü rumuzu değiştirilemez."
 
   password:
     syntax:         "SASET <rumuz> PASSWORD <yeni_şifre>"
     short:          "Bir rumuzun şifresini değiştir."
-    help:           "Başka bir rumuzun şifresini değiştirir.\nDeğişiklik hemen geçerlidir.\n\nSözdizimi: SASET <rumuz> PASSWORD <yeni_şifre>\nÖrnek: SASET Kullanıcı PASSWORD yenişifre123"
+    help:           "Başka bir rumuzun şifresini değiştirir.\nDeğişiklik hemen geçerlidir."
+    example:        "/msg %bot% SASET Kullanıcı PASSWORD yenişifre123"
 
   email:
     syntax:         "SASET <rumuz> EMAIL <yeni_e-posta>"
     short:          "Bir rumuzun e-postasını değiştir."
-    help:           "Başka bir rumuzun e-postasını değiştirir.\nOnay gönderilmez—değişiklik hemen geçerlidir.\n\nSözdizimi: SASET <rumuz> EMAIL <yeni_e-posta>\nÖrnek: SASET Kullanıcı EMAIL kullanıcı@örnek.com"
+    help:           "Başka bir rumuzun e-postasını değiştirir.\nOnay gönderilmez—değişiklik hemen geçerlidir."
+    example:        "/msg %bot% SASET Kullanıcı EMAIL kullanıcı@örnek.com"
 
   language:
     syntax:         "SASET <rumuz> LANGUAGE <kod>"
     short:          "Bir rumuzun dilini değiştir."
-    help:           "Başka bir rumuzun dilini değiştirir.\nKullanılabilir diller: en (İngilizce), es (İspanyolca).\n\nSözdizimi: SASET <rumuz> LANGUAGE <kod>\nÖrnek: SASET Kullanıcı LANGUAGE tr"
+    help:           "Başka bir rumuzun dilini değiştirir.\nKullanılabilir diller: en (İngilizce), es (İspanyolca)."
+    example:        "/msg %bot% SASET Kullanıcı LANGUAGE tr"
 
   timezone:
     syntax:         "SASET <rumuz> TIMEZONE <zaman_dilimi|OFF>"
     short:          "Bir rumuzun zaman dilimini değiştir."
-    help:           "Başka bir rumuzun zaman dilimini ayarlar veya temizler.\nTemizlemek için OFF kullanın.\n\nSözdizimi: SASET <rumuz> TIMEZONE <zaman_dilimi>\nÖrnek: SASET Kullanıcı TIMEZONE Europe/Istanbul"
+    help:           "Başka bir rumuzun zaman dilimini ayarlar veya temizler.\nTemizlemek için OFF kullanın."
+    example:        "/msg %bot% SASET Kullanıcı TIMEZONE Europe/Istanbul"
 
   private:
     syntax:         "SASET <rumuz> PRIVATE {ON|OFF}"
     short:          "Bir rumuzun gizliliğini değiştir."
-    help:           "Başka bir rumuzun bilgilerinin gizliliğini etkinleştirir veya devre dışı bırakır.\n\nSözdizimi: SASET <rumuz> PRIVATE {ON|OFF}\nÖrnek: SASET Kullanıcı PRIVATE ON"
+    help:           "Başka bir rumuzun bilgilerinin gizliliğini etkinleştirir veya devre dışı bırakır."
+    example:        "/msg %bot% SASET Kullanıcı PRIVATE ON"
 
   msg:
     syntax:         "SASET <rumuz> MSG {ON|OFF}"
     short:          "Bir rumuzun mesaj tercihini değiştir."
-    help:           "Başka bir rumuzun yanıtları PRIVMSG (ON) veya NOTICE (OFF) olarak alıp almayacağını ayarlar.\n\nSözdizimi: SASET <rumuz> MSG {ON|OFF}\nÖrnek: SASET Kullanıcı MSG ON"
+    help:           "Başka bir rumuzun yanıtları PRIVMSG (ON) veya NOTICE (OFF) olarak alıp almayacağını ayarlar."
+    example:        "/msg %bot% SASET Kullanıcı MSG ON"
 
   vhost:
     syntax:         "SASET <rumuz> VHOST [vhost]"
     short:          "Bir rumuzun sanal host'unu değiştir."
-    help:           "Başka bir rumuzun sanal host'unu ayarlar veya temizler.\nTemizlemek için \x02SASET <rumuz> VHOST\x02 komutunu değer olmadan kullanın.\n\nSözdizimi: SASET <rumuz> VHOST [vhost]\nÖrnek: SASET Kullanıcı VHOST kullanıcılar.örnek.com"
+    help:           "Başka bir rumuzun sanal host'unu ayarlar veya temizler.\nTemizlemek için \x02SASET <rumuz> VHOST\x02 komutunu değer olmadan kullanın."
+    example:        "/msg %bot% SASET Kullanıcı VHOST kullanıcılar.örnek.com"
 
 # --- HELP -------------------------------------------------------------------
 help:
@@ -289,6 +309,7 @@ help:
   set_sub_syntax: "HELP %command% <seçenek>"
   set_sub_footer: "%marker% Daha fazla bilgi için /msg %bot% \x02\x0303%syntax%\x03\x0F kullanın."
   syntax_label: "Sözdizimi: \x02\x0303%syntax%\x03\x0F"
+  example_label: "Örnek: \x02\x0303%example%\x03\x0F"
   footer: "\x0314─────────────────────────────\x03\x0F"
   group_header: "\x0310  ◆ %group%\x03\x0F"
   subgroup_header: "\x0310  ◆ %group%\x03\x0F"
@@ -326,9 +347,7 @@ userip:
 
     Bu komut hassas rumuz bilgilerini gösterir.
     Sorumlu bir şekilde kullanın.
-
-    Sözdizimi: USERIP <nickname>
-    Örnek: USERIP BaziKullanici
+  example:          "/msg %bot% USERIP BaziKullanici"
   not_online:       "\x0304✗\x03 \x02%nickname%\x02 rumuzu bağlı değil."
   result:           "\x0307ℹ\x03 Rumuz: \x02%nickname%\x02 | IP: \x0307%ip%\x03 | Host: \x0307%host%\x03"
 
@@ -338,6 +357,7 @@ whoip:
   help:             |
     Son tanımlanmış bağlantısı bu IP adresini kullanmış kayıtlı takma adları listeler.
     Kaydedilen adres güncel olmayabilir.
+  example:          "/msg %bot% WHOIP 203.0.113.42"
   empty:            "Bu IP adresiyle eşleşen kayıtlı takma ad yok."
   header:           "Eşleşen takma adlar:"
 
@@ -353,12 +373,7 @@ suspend:
 
     Askıya alınan kullanıcılar rumuzlarına kimlik doğrulayamaz.
     IRC operatörleri ve root kullanıcılar askıya alınamaz.
-
-    Sözdizimi: SUSPEND <nickname> <süre> <sebep>
-    Örnekler:
-      SUSPEND KtUye 7g #help kanalında spam
-      SUSPEND Suistlm 30g Tekrarlanan flood
-      SUSPEND Sorunlu 0 Permaban kaçakçılığı
+  example:          "/msg %bot% SUSPEND KtUye 7g #help kanalında spam"
   success:            "\x0303✔\x03 \x02%nickname%\x02 rumuzu \x02%duration%\x02 tarihine kadar askıya alındı."
   already_suspended:  "\x0304✗\x03 \x02%nickname%\x02 rumuzu zaten askıya alınmış."
   not_registered:     "\x0304✗\x03 \x02%nickname%\x02 rumuzu kayıtlı değil."
@@ -375,9 +390,7 @@ unsuspend:
   short:            "Bir rumuzun askısını kaldırın."
   help:             |
     Bir rumuzun aktif askısını kaldırarak sahibinin tekrar kimlik doğrulayabilmesini sağlar.
-
-    Sözdizimi: UNSUSPEND <nickname>
-    Örnek: UNSUSPEND BaziKullanici
+  example:          "/msg %bot% UNSUSPEND BaziKullanici"
   success:          "\x0303✔\x03 \x02%nickname%\x02 adlı kullanıcının askısı kaldırıldı."
   not_registered:   "\x0304✗\x03 \x02%nickname%\x02 rumuzu kayıtlı değil."
   not_suspended:    "\x0304✗\x03 \x02%nickname%\x02 rumuzu askıya alınmamış."
@@ -393,9 +406,7 @@ rename:
     Yeni rumuz formatı yapılandırılmış misafir önekinde (%prefix%) oluşturulur.
 
     Bu komut IRCop izni gerektirir: nickserv.rename
-
-    Sözdizimi: RENAME <nickname>
-    Örnek: RENAME SorunluKisi
+  example:          "/msg %bot% RENAME Guest-4F21AB"
   not_online:        "\x0304✗\x03 \x02%nickname%\x02 rumuzu bağlı değil."
   cannot_rename_root: "\x0304✗\x03 Root kullanıcı \x02%nickname%\x02 yeniden adlandırılamaz."
   cannot_rename_oper: "\x0304✗\x03 IRC operatörü \x02%nickname%\x02 yeniden adlandırılamaz."
@@ -415,9 +426,7 @@ drop:
     Kendi rumuzunuzu bırakamazsınız.
 
     Bu komut IRCop izni gerektirir: nickserv.drop
-
-    Sözdizimi: DROP <nickname>
-    Örnek: DROP EskiHesap
+  example:          "/msg %bot% DROP EskiHesap"
   not_registered:     "\x0304✗\x03 \x02%nickname%\x02 rumuzu kayıtlı değil."
   suspended:         "\x0304✗\x03 \x02%nickname%\x02 rumuzu askıya alınmış. Önce askıyı kaldırın."
   forbidden:         "\x0304✗\x03 \x02%nickname%\x02 rumuzu yasaklanmış."
@@ -434,6 +443,7 @@ restore:
   syntax:           "RESTORE <nickname>"
   short:            "Silinmeyi bekleyen bir rumuzu geri yükle."
   help:             "Manuel olarak bırakılmış ve hala ödemesiz dönem içinde olan bir rumuzu geri yükler. IRCop izni gerektirir: nickserv.restore."
+  example:          "/msg %bot% RESTORE rumuz"
   success:          "\x0303✓\x03 \x02%nickname%\x02 rumuzu geri yüklendi."
   not_registered:   "\x0304✗\x03 \x02%nickname%\x02 rumuzu kayıtlı değil."
   not_pending_deletion: "\x0304✗\x03 \x02%nickname%\x02 rumuzu silinmeyi beklemiyor."
@@ -452,9 +462,7 @@ forbid:
     Root kullanıcılar, IRC operatörleri ve hizmet rumuzları yasaklanamaz.
 
     Bu komut IRCop izni gerektirir: nickserv.forbid
-
-    Sözdizimi: FORBID <nickname> <sebep>
-    Örnek: FORBID KtRumuz Tekrarlanan politika ihlalleri
+  example:          "/msg %bot% FORBID KtRumuz Tekrarlanan politika ihlalleri"
   success:            "\x0303✔\x03 \x02%nickname%\x02 rumuzu yasaklandı."
   updated:            "\x0303✔\x03 \x02%nickname%\x02 için yasaklama sebebi güncellendi."
   reason_required:    "\x0304✗\x03 Yasaklama için bir sebep belirtmelisiniz."
@@ -470,9 +478,7 @@ unforbid:
     Bir rumuz yasağını kaldırarak rumuzun tekrar kullanılabilmesini sağlar.
 
     Bu komut IRCop izni gerektirir: nickserv.forbid
-
-    Sözdizimi: UNFORBID <nickname>
-    Örnek: UNFORBID BaziRumuz
+  example:          "/msg %bot% UNFORBID BaziRumuz"
   success:          "\x0303✔\x03 \x02%nickname%\x02 rumuzu artık yasaklı değil."
   not_forbidden:    "\x0304✗\x03 \x02%nickname%\x02 rumuzu yasaklı değil."
 
@@ -485,7 +491,7 @@ forbidvhost:
     ayarlamalarını engelleyen kalıpları yönetir.
 
     Jokerler: * herhangi bir diziyi eşler, ? tek karakteri eşler.
-    Örnek: *.korsan.com, .korsan.com ile biten tüm vhost'ları engeller.
+    *.korsan.com gibi bir kalıp, .korsan.com ile biten tüm vhost'ları engeller.
 
     Bu komut IRCop izni gerektirir: nickserv.forbidvhost
 
@@ -493,6 +499,7 @@ forbidvhost:
       ADD <kalıp>    Yasaklı bir kalıp ekleyin
       DEL <kalıp>    Yasaklı bir kalıbı kaldırın
       LIST             Tüm yasaklı kalıpları gösterin
+  example:          "/msg %bot% FORBIDVHOST ADD *.korsan.com"
 
   unknown_sub: "\x0304✗\x03 Bilinmeyen alt komut \x02%sub%\x02. ADD, DEL veya LIST kullanın."
 
@@ -504,9 +511,7 @@ forbidvhost:
       SET VHOST ile bu kalıpla eşleşen vhost'ları ayarlayamaz.
 
       Jokerler: * herhangi bir diziyi eşler, ? tek karakteri eşler.
-
-      Sözdizimi: FORBIDVHOST ADD <kalıp>
-      Örnek: FORBIDVHOST ADD *.korsan.com
+    example:     "/msg %bot% FORBIDVHOST ADD *.korsan.com"
     done:            "\x0303✓\x03 Yasaklı vhost kalıbı eklendi: \x02%pattern%\x02"
     already_exists:  "\x0304✗\x03 \x02%pattern%\x02 kalıbı zaten mevcut."
     invalid:          "\x0304✗\x03 Geçersiz vhost kalıbı formatı."
@@ -516,9 +521,7 @@ forbidvhost:
     short:       "Yasaklı bir vhost kalıbını kaldırın."
     help:        |
       Yasaklı vhost listesinden bir kalıbı kaldırır.
-
-      Sözdizimi: FORBIDVHOST DEL <kalıp>
-      Örnek: FORBIDVHOST DEL *.korsan.com
+    example:     "/msg %bot% FORBIDVHOST DEL *.korsan.com"
     done:        "\x0303✓\x03 Yasaklı vhost kalıbı kaldırıldı: \x02%pattern%\x02"
     not_found:   "\x0304✗\x03 \x02%pattern%\x02 kalıbı bulunamadı."
 
@@ -527,8 +530,7 @@ forbidvhost:
     syntax:      "FORBIDVHOST LIST"
     help:        |
       Tüm yasaklı vhost kalıplarını gösterir.
-
-      Sözdizimi: FORBIDVHOST LIST
+    example:     "/msg %bot% FORBIDVHOST LIST"
     header:      "\x0307ℹ\x03 Yasaklı vhost kalıpları (\x02%count%\x02):"
     entry:       "  %index%. \x0304%pattern%\x03 — ekleyen: %nickname% (%date%)"
     empty:       "\x0307ℹ\x03 Yasaklı vhost kalıbı yok."
@@ -546,25 +548,13 @@ history:
       SUSPEND, UNSUSPEND, SET PASSWORD, SET EMAIL, SASET PASSWORD,
       SASET EMAIL, RECOVER
 
-    Sözdizimi: HISTORY <nickname> ADD <mesaj>
-            HISTORY <nickname> DEL <id>
-            HISTORY <nickname> VIEW [SAYFA|ALL]
-            HISTORY <nickname> CLEAR
-
-    Örnekler:
-      HISTORY BaziRumuz VIEW
-      HISTORY BaziRumuz ADD Bu kullanıcı hakkında manuel not
-      HISTORY BaziRumuz VIEW 2
-      HISTORY BaziRumuz VIEW ALL
-      HISTORY BaziRumuz DEL 123
-      HISTORY BaziRumuz CLEAR
-
     Geçmişi görmek için VIEW kullanın (varsayılan 3 giriş).
     Sonraki sayfayı görmek için VIEW SAYFA 2 kullanın.
     Tam geçmişi görmek için VIEW ALL kullanın.
     Manuel giriş eklemek için ADD kullanın.
     Belirli bir girişi ID ile silmek için DEL kullanın.
     Tüm geçmiş girişlerini silmek için CLEAR kullanın.
+  example:          "/msg %bot% HISTORY BaziRumuz VIEW"
   not_registered:   "\x0304✗\x03 \x02%nickname%\x02 rumuzu kayıtlı değil."
   unknown_operator: "(bilinmiyor)"
 
@@ -573,9 +563,7 @@ history:
     short:      "Manuel bir geçmiş girişi ekleyin."
     help:        |
       Rumuzun geçmişine manuel bir giriş ekler.
-
-      Sözdizimi: HISTORY <nickname> ADD <mesaj>
-      Örnek: HISTORY BaziRumuz ADD Kullanıcı spam için raporlandı
+    example:     "/msg %bot% HISTORY BaziRumuz ADD Kullanıcı spam için raporlandı"
     success:    "\x0303✔\x03 \x02%nickname%\x02 için geçmiş girişi eklendi."
 
   del:
@@ -583,9 +571,7 @@ history:
     short:      "ID ile bir geçmiş girişini silin."
     help:        |
       Belirli bir geçmiş girişini ID'sine göre siler.
-
-      Sözdizimi: HISTORY <nickname> DEL <id>
-      Örnek: HISTORY BaziRumuz DEL 42
+    example:     "/msg %bot% HISTORY BaziRumuz DEL 42"
     success:    "\x0303✔\x03 Geçmiş girişi \x02%id%\x02 silindi."
     not_found:  "\x0304✗\x03 Geçmiş girişi \x02%id%\x02 bulunamadı."
     invalid_id: "\x0304✗\x03 Geçersiz giriş ID'si: \x02%id%\x02."
@@ -596,13 +582,10 @@ history:
     help:        |
       Rumuzun eylem geçmişini gösterir.
 
-      Sözdizimi: HISTORY <nickname> VIEW
-              HISTORY <nickname> VIEW SAYFA
-              HISTORY <nickname> VIEW ALL
-
       Varsayılan olarak her defasında 3 giriş gösterir.
       İkinci sayfayı görmek için VIEW 2 kullanın.
       Tam geçmişi görmek için VIEW ALL kullanın.
+    example:     "/msg %bot% HISTORY BaziRumuz VIEW"
     header:     "\x02\x0307%nickname%\x03\x02 için geçmiş (%start%-%end% / %total% gösteriliyor):"
     entry:       "#%id% [%date%] \x0303%action%\x03 - %operator% tarafından — %message%"
     extra:       "  Ekstra \x0307→\x03 %extra%"
@@ -615,9 +598,7 @@ history:
     help:        |
       Belirtilen rumuz için tüm geçmiş girişlerini kaldırır.
       Bu eylem geri alınamaz.
-
-      Sözdizimi: HISTORY <nickname> CLEAR
-      Örnek: HISTORY BaziRumuz CLEAR
+    example:     "/msg %bot% HISTORY BaziRumuz CLEAR"
     success:    "\x0303✔\x03 \x02%nickname%\x02 için \x02%count%\x02 geçmiş girişi temizlendi."
 
 # --- Geçmiş mesaj çevirileri (geçmiş görüntülenirken kullanılır) ---
@@ -649,11 +630,7 @@ noexpire:
     KAPALI olduğunda, normal süre sonu kuralları uygulanır.
 
     Bu komutu yalnızca 'nickserv.noexpire' iznine sahip IRCop'ler kullanabilir.
-
-    Sözdizimi: NOEXPIRE <nickname> {ON|OFF}
-    Örnekler:
-      NOEXPIRE OnemliKullanici ON
-      NOEXPIRE OnemliKullanici OFF
+  example:          "/msg %bot% NOEXPIRE OnemliKullanici ON"
   success_on:       "\x0303✔\x03 \x02%nickname%\x02 rumuzu artık süre sonuna karşı korunuyor."
   success_off:      "\x0303✔\x03 \x02%nickname%\x02 rumuzu artık normal şekilde sona erecek."
   not_registered:   "\x0304✗\x03 \x02%nickname%\x02 rumuzu kayıtlı değil."
@@ -665,6 +642,7 @@ list:
   syntax: "LIST <desen> [sayfa]"
   short: "Bir desenle eşleşen kayıtlı takma adları listeler."
   help: "Belirtilen desenle eşleşen kayıtlı takma adları listeler. * joker karakteri herhangi bir karakter dizisiyle eşleşir. Sayfa isteğe bağlıdır ve 1'den başlar."
+  example: "/msg %bot% LIST rumuz*"
   header: "Takma ad | Kayıt | Son bağlantı | IP | Durum"
   row: "%nickname% | %registered% | %last_seen% | %ip% | %status%"
   page: "Sayfa %page%/%pages% — %total% eşleşme"
@@ -686,4 +664,5 @@ saregister:
   syntax:           "SAREGISTER <takma ad> <parola> <email>"
   short:            "Başka bir kullanıcı için takma ad kaydeder."
   help:             "Başka bir kullanıcı adına takma ad kaydeder. Hesap doğrudan etkin oluşturulur:\ne-posta doğrulaması ve kayıt hız sınırı atlanır.\nAdres yine doğrulanır ve boş olmalıdır.\nBu komut operatör izni gerektirir."
+  example:          "/msg %bot% SAREGISTER rumuz s3cret ana@example.com"
   done:             "\x0303✔\x03 \x02%nickname%\x02 takma adı kaydedildi."

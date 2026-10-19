@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\NickServ\Adapter\In\Irc\Help;
 
 use function is_array;
+use function is_string;
 use function strtoupper;
 
 /**
@@ -168,13 +169,20 @@ final readonly class UnifiedHelpFormatter
         $lines[] = $context->trans('help.syntax_label', [
             'syntax' => $context->trans($handler->getSyntaxKey()),
         ]);
+
+        $exampleKey = method_exists($handler, 'getExampleKey') ? $handler->getExampleKey() : null;
+        if (is_string($exampleKey)) {
+            $lines[] = ' ';
+            $lines[] = $context->trans('help.example_label', ['example' => $context->trans($exampleKey)]);
+        }
+
         $lines[] = $this->renderFooter($context);
 
         return $lines;
     }
 
     /**
-     * @param array{name: string, help_key: string, syntax_key: string, options_key?: string} $sub
+     * @param array{name: string, help_key: string, syntax_key: string, options_key?: string, example_key?: string} $sub
      *
      * @return list<string>
      */
@@ -190,6 +198,10 @@ final readonly class UnifiedHelpFormatter
         $lines[] = $context->trans('help.syntax_label', [
             'syntax' => $context->trans($sub['syntax_key']),
         ]);
+        if (isset($sub['example_key'])) {
+            $lines[] = ' ';
+            $lines[] = $context->trans('help.example_label', ['example' => $context->trans($sub['example_key'])]);
+        }
         $lines[] = $this->renderFooter($context);
 
         return $lines;

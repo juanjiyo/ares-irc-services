@@ -65,6 +65,7 @@ final readonly class SetCommand implements NickServCommandInterface
             'desc_key' => 'set.' . strtolower($option) . '.short',
             'help_key' => 'set.' . strtolower($option) . '.help',
             'syntax_key' => 'set.' . strtolower($option) . '.syntax',
+            'example_key' => 'set.' . strtolower($option) . '.example',
         ], self::SUPPORTED_OPTIONS);
     }
 
@@ -76,6 +77,11 @@ final readonly class SetCommand implements NickServCommandInterface
     public function getRequiredPermission(): string
     {
         return NickServPermission::IDENTIFIED_OWNER;
+    }
+
+    public function getExampleKey(): string
+    {
+        return 'set.example';
     }
 
     public function getHelpParams(): array

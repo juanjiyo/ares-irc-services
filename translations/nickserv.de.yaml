@@ -25,6 +25,7 @@ register:
   syntax:           "REGISTER <Passwort> <E-Mail>"
   short:            "Ihren Nickname bei den Services registrieren."
   help:             "Startet die Registrierung Ihres aktuellen Nicknames. Ein Verifizierungs-Token\nwird an die angegebene E-Mail-Adresse gesendet. Schließen Sie die Registrierung\nmit \x0303/msg %bot% VERIFY <Token>\x03 ab. Das Token läuft in 1 Stunde ab.\nWenn es nicht ankommt, prüfen Sie Ihren Spam-Ordner oder verwenden Sie \x0303RESEND\x03."
+  example:          "/msg %bot% REGISTER s3cret ana@example.com"
   pending:          "\x0307→\x03 Ein Verifizierungs-Token wurde an \x02%email%\x02 gesendet.\n  Führen Sie \x0303/msg %bot% VERIFY <Token>\x03 aus, um die Registrierung abzuschließen.\n  Nicht erhalten? Prüfen Sie Spam oder verwenden Sie \x0303/msg %bot% RESEND\x03\n  Das Token läuft in \x021 Stunde\x02 ab."
   registered:       "\x0303✔\x03 Der Nickname \x02%nickname%\x02 wurde registriert."
   already_registered: "\x0304✗\x03 Nickname \x02%nickname%\x02 ist bereits registriert."
@@ -41,6 +42,7 @@ verify:
   syntax:           "VERIFY <Token>"
   short:            "Ihre E-Mail-Adresse bestätigen und Ihren Nickname aktivieren."
   help:             "Schließt die Registrierung ab, indem das an Ihre E-Mail gesendete Token verifiziert wird.\nDas Token ist ab dem Zeitpunkt der Registrierung 1 Stunde lang gültig."
+  example:          "/msg %bot% VERIFY 4XZ9KQ2M"
   success:          "\x0303✔\x03 Nickname \x02%nickname%\x02 wurde erfolgreich registriert und Sie sind jetzt identifiziert."
   success_native:   "\x0303✔\x03 Nickname \x02%nickname%\x02 wurde erfolgreich registriert. Verwenden Sie die unten gezeigte native Authentifizierung."
   invalid_token:    "\x0304✗\x03 Das Token ist ungültig oder abgelaufen. Verwenden Sie \x0303/msg %bot% REGISTER\x03, um neu zu beginnen."
@@ -51,6 +53,7 @@ resend:
   syntax:           "RESEND"
   short:            "Das Verifizierungs-Token erneut an Ihre E-Mail senden."
   help:             "Sendet das Verifizierungs-Token erneut an die bei der Registrierung\nangegebene E-Mail-Adresse. Funktioniert nur bei einer ausstehenden Registrierung."
+  example:          "/msg %bot% RESEND"
   success:          "\x0307→\x03 Verifizierungs-Token erneut an \x02%email%\x02 gesendet."
   no_pending:       "\x0304✗\x03 Sie haben keine ausstehende Registrierung, für die ein Token erneut gesendet werden kann."
   throttled:        "\x0304✗\x03 Sie müssen \x02%minutes%\x02 Minute(n) warten, bevor Sie eine weitere Verifizierungs-E-Mail anfordern."
@@ -60,6 +63,7 @@ recover:
   syntax:           "RECOVER <nickname> [Token]"
   short:            "Ihren Nickname wiederherstellen, wenn Sie Ihr Passwort verloren haben."
   help:             "Stellt den Zugriff auf einen registrierten Nickname wieder her, wenn Sie Ihr Passwort\nverloren haben.\n1) \x0303RECOVER <nickname>\x03 — ein Token wird an die E-Mail des Nicknames gesendet.\n2) \x0303RECOVER <nickname> <Token>\x03 — geben Sie das Token aus der E-Mail ein, um Ihr Passwort zurückzusetzen.\nSie erhalten dann ein temporäres Passwort und den Befehl, es zu ändern."
+  example:          "/msg %bot% RECOVER nickname"
   email_sent:       "\x0307→\x03 Ein Wiederherstellungs-Token wurde an \x02%email_hint%\x02 gesendet. Prüfen Sie Ihren Posteingang (und Spam-Ordner)."
   not_registered:   "\x0304✗\x03 Nickname \x02%nickname%\x02 ist nicht registriert."
   pending:          "\x0304✗\x03 Nickname \x02%nickname%\x02 hat eine ausstehende E-Mail-Verifizierung."
@@ -76,6 +80,7 @@ identify:
   syntax:           "IDENTIFY <nickname> <Passwort>"
   short:            "Sich als Besitzer eines Nicknames identifizieren."
   help:             "Authentifiziert Ihre Sitzung bei %nickserv% mit Ihrem Nickname und Passwort.\nNach erfolgreicher Identifizierung erhalten Sie den registrierten Modus \x02+r\x02\nund, falls Sie einen Gast-Nick verwendet haben, wird Ihr registrierter Nick wiederhergestellt."
+  example:          "/msg %bot% IDENTIFY nickname s3cret"
   native_syntax:    "/NICK <nickname>:<Passwort> | /NICK <nickname>!<Passwort>"
   native_short:     "Zeigt die native Syntax zur Nickname-Authentifizierung."
   native_help:      "Dieses Protokoll authentifiziert Konten durch Nickname-Wechsel.\nVerwende /NICK <nickname>:<Passwort> oder, wenn der Nickname belegt ist, /NICK <nickname>!<Passwort>."
@@ -97,6 +102,7 @@ status:
   syntax:           "STATUS <nickname>"
   short:            "Den Registrierungsstatus eines Nicknames anzeigen."
   help:             "Zeigt den aktuellen Status eines Nicknames: registriert, ausstehende Verifizierung,\nsuspendiert oder gesperrt."
+  example:          "/msg %bot% STATUS nickname"
   header:           "\x02Status von Nick \x0307%nickname%\x03\x02"
   unregistered:     "  Status          : Nicht registriert"
   not_registered_offline: "  Status          : \x0315Nicht registriert\x03"
@@ -121,6 +127,7 @@ info:
   syntax:           "INFO <nickname>"
   short:            "Informationen über einen registrierten Nickname anzeigen."
   help:             "Zeigt Registrierungsdetails für einen Nickname: Registrierungsdatum,\nVerbindungsstatus, letzte Quit-Nachricht und E-Mail-Adresse. Die E-Mail\nist nur für den Besitzer sichtbar, wenn identifiziert. Mit PRIVATE ON\nkönnen nur der Besitzer und IRC-Operatoren die Informationen einsehen."
+  example:          "/msg %bot% INFO nickname"
   not_registered:   "\x0304✗\x03 Nickname \x02%nickname%\x02 ist nicht registriert."
   private:          "\x0304✗\x03 Informationen zu Nickname \x02%nickname%\x02 sind privat."
   header:           "\x02Informationen für Nickname \x0307%nickname%\x03\x02"
@@ -156,18 +163,21 @@ set:
   syntax:           "SET <Option> <Wert>"
   short:            "Optionen deines Nicknames ändern."
   help:             "Ändert Ihre %nickserv%-Nickname-Einstellungen.\nSie müssen identifiziert sein, um diesen Befehl zu verwenden."
+  example:          "/msg %bot% SET PASSWORD n3wpass"
   unknown_option:   "\x0304✗\x03 Unbekannte Option \x02%option%\x02. Verfügbare Optionen: %options%."
 
   password:
     syntax:         "SET PASSWORD <neues_passwort>"
     short:          "Ihr Nickname-Passwort ändern."
     help:           "Ändert das Passwort für Ihren Nickname. Das neue Passwort wird\nsofort wirksam. Wählen Sie ein starkes Passwort mit mindestens 6 Zeichen,\ndas Sie nicht bei anderen Diensten verwenden."
+    example:        "/msg %bot% SET PASSWORD neuespass123"
     success:        "\x0303✔\x03 Ihr Passwort wurde erfolgreich aktualisiert."
 
   email:
     syntax:         "SET EMAIL <neue_e-mail> [Token]"
     short:          "Die mit Ihrem Nickname verknüpfte E-Mail-Adresse ändern (zweistufige Bestätigung)."
     help:           "E-Mail-Änderung in zwei Schritten aus Sicherheitsgründen.\n1) \x0303SET EMAIL <neue_e-mail>\x03 — ein Token wird an Ihre aktuelle E-Mail gesendet.\n2) \x0303SET EMAIL <neue_e-mail> <Token>\x03 — mit dem erhaltenen Token bestätigen.\nDas Token läuft in 1 Stunde ab."
+    example:        "/msg %bot% SET EMAIL benutzer@beispiel.com"
     success:        "\x0303✔\x03 Ihre E-Mail wurde auf \x02%email%\x02 aktualisiert."
     pending_sent:   "\x0307→\x03 Ein Bestätigungs-Token wurde an \x02%current_email%\x02 gesendet.\n  Um die Änderung auf \x02%new_email%\x02 zu bestätigen, führen Sie aus:\n  \x0303/msg %bot% SET EMAIL %new_email% <Token>\x03\n  Das Token läuft in 1 Stunde ab."
     invalid_token:  "\x0304✗\x03 Das Token ist ungültig oder abgelaufen. Fordern Sie ein neues mit \x0303SET EMAIL <neue_e-mail>\x03 an."
@@ -176,6 +186,7 @@ set:
     syntax:         "SET LANGUAGE <Code>"
     short:          "Die Sprache ändern, in der die Services mit Ihnen kommunizieren."
     help:           "Ändert die Sprache, die %nickserv% und andere Services verwenden, wenn sie\nmit Ihnen sprechen.\nVerfügbare Sprachen:\n  \x02ca\x02 (Katalanisch)\n  \x02de\x02 (Deutsch)\n  \x02el\x02 (Griechisch)\n  \x02en\x02 (Englisch)\n  \x02es\x02 (Spanisch)\n  \x02eu\x02 (Baskisch)\n  \x02fr\x02 (Französisch)\n  \x02gl\x02 (Galicisch)\n  \x02it\x02 (Italienisch)\n  \x02nl\x02 (Niederländisch)\n  \x02pl\x02 (Polnisch)\n  \x02pt\x02 (Portugiesisch)\n  \x02ro\x02 (Rumänisch)\n  \x02tr\x02 (Türkisch)"
+    example:        "/msg %bot% SET LANGUAGE de"
     success:        "\x0303✔\x03 Sprache auf \x02%language%\x02 geändert."
     invalid:        "\x0304✗\x03 Nicht unterstützte Sprache. Verfügbare Sprachen: %languages%."
 
@@ -183,6 +194,7 @@ set:
     syntax:         "SET TIMEZONE <Zeitzone>"
     short:          "Die Zeitzone für die Datumsanzeige festlegen."
     help:           "Legt die Zeitzone fest, die %nickserv% bei der Datumsanzeige verwendet.\nVerwenden Sie \x02HELP SET TIMEZONE\x02 für den Regionsindex; \x02HELP SET TIMEZONE <Region>\x02 (z. B. Europe) für Zeitzonen dieser Region. Verwenden Sie \x02OFF\x02 zum Löschen."
+    example:        "/msg %bot% SET TIMEZONE Europe/Berlin"
     success:        "\x0303✔\x03 Zeitzone auf \x02%timezone%\x02 gesetzt. Daten werden in dieser Zeitzone angezeigt."
     cleared:        "\x0303✔\x03 Zeitzone gelöscht. Daten verwenden die Netzwerk-Standardeinstellung."
     invalid:        "\x0304✗\x03 Ungültige Zeitzone \x02%timezone%\x02. Verwenden Sie eine gültige Kennung (z. B. UTC, Europe/Berlin)."
@@ -191,6 +203,7 @@ set:
     syntax:         "SET PRIVATE {ON|OFF}"
     short:          "Privatsphäre für Ihre Nickname-Informationen aktivieren oder deaktivieren."
     help:           "Steuert die Sichtbarkeit Ihrer Nickname-Informationen im INFO-Befehl.\nMit \x02PRIVATE ON\x02 können nur Sie und IRC-Operatoren Ihre Details einsehen.\nMit \x02PRIVATE OFF\x02 sind Ihre Informationen für jeden öffentlich."
+    example:        "/msg %bot% SET PRIVATE ON"
     on:             "\x0303✔\x03 Ihre Nickname-Informationen sind jetzt \x02privat\x02."
     off:            "\x0303✔\x03 Ihre Nickname-Informationen sind jetzt \x02öffentlich\x02."
 
@@ -198,6 +211,7 @@ set:
     syntax:         "SET MSG {ON|OFF}"
     short:          "PRIVMSG (ON) oder NOTICE (OFF) für Service-Antworten verwenden."
     help:           "Steuert, wie %nickserv% und andere Services Nachrichten an Sie senden.\nMit \x02MSG ON\x02 werden Antworten als \x02PRIVMSG\x02 gesendet (manche Clients können\nAntworten oder Benachrichtigungen auslösen).\nMit \x02MSG OFF\x02 werden Antworten als \x02NOTICE\x02 gesendet (Standard; normalerweise\nkeine automatische Antwort)."
+    example:        "/msg %bot% SET MSG ON"
     on:             "\x0303✔\x03 Service-Nachrichten werden jetzt als \x02PRIVMSG\x02 gesendet."
     off:            "\x0303✔\x03 Service-Nachrichten werden jetzt als \x02NOTICE\x02 gesendet."
 
@@ -205,6 +219,7 @@ set:
     syntax:         "SET VHOST [vhost]"
     short:          "Ihren eigenen virtuellen Host (angezeigter Hostname) setzen oder löschen."
     help:           "Legt einen benutzerdefinierten Hostnamen fest, den andere sehen, wenn Sie\nidentifiziert sind.\nVerwenden Sie \x02SET VHOST\x02 ohne Wert zum Löschen. Nur Buchstaben (a-z, A-Z), Ziffern,\nBindestrich und Punkt; kein Bindestrich oder Punkt am Anfang/Ende eines Blocks;\nmax. 48 Zeichen. Eindeutig pro Nickname."
+    example:        "/msg %bot% SET VHOST benutzer.beispiel.com"
     success:        "\x0303✔\x03 Ihr virtueller Host wurde auf \x02%vhost%\x02 gesetzt."
     cleared:        "\x0303✔\x03 Ihr virtueller Host wurde gelöscht."
     invalid:        "\x0304✗\x03 Ungültiger VHost. Nur Buchstaben, Ziffern, Bindestrich und Punkt (nicht am\nAnfang/Ende eines Blocks); max. 48 Zeichen."
@@ -225,46 +240,51 @@ saset:
     SASET EMAIL: Ändert die E-Mail direkt (ohne Token-Validierung).
 
     Dieser Befehl erfordert IRCop-Berechtigung: nickserv.saset
-
-    Syntax: SASET <Nickname> <Option> <Wert>
-    Beispiel: SASET Benutzer PASSWORD neuespass
+  example:          "/msg %bot% SASET Benutzer PASSWORD neuespass"
   unknown_option:   "\x0304✗\x03 Unbekannte Option \x02%option%\x02. Verfügbare Optionen: %options%."
   cannot_modify_oper: "\x0304✗\x03 Kann Nickname eines IRC-Operators nicht ändern."
 
   password:
     syntax:         "SASET <Nickname> PASSWORD <neues_Passwort>"
     short:          "Passwort eines Nicknames ändern."
-    help:           "Ändert das Passwort eines anderen Nicknames.\nDie Änderung ist sofort wirksam.\n\nSyntax: SASET <Nickname> PASSWORD <neues_Passwort>\nBeispiel: SASET Benutzer PASSWORD neuespass123"
+    help:           "Ändert das Passwort eines anderen Nicknames.\nDie Änderung ist sofort wirksam."
+    example:        "/msg %bot% SASET Benutzer PASSWORD neuespass123"
 
   email:
     syntax:         "SASET <Nickname> EMAIL <neue_E-Mail>"
     short:          "E-Mail eines Nicknames ändern."
-    help:           "Ändert die E-Mail eines anderen Nicknames.\nEs wird keine Bestätigung gesendet—die Änderung ist sofort wirksam.\n\nSyntax: SASET <Nickname> EMAIL <neue_E-Mail>\nBeispiel: SASET Benutzer EMAIL benutzer@beispiel.com"
+    help:           "Ändert die E-Mail eines anderen Nicknames.\nEs wird keine Bestätigung gesendet—die Änderung ist sofort wirksam."
+    example:        "/msg %bot% SASET Benutzer EMAIL benutzer@beispiel.com"
 
   language:
     syntax:         "SASET <Nickname> LANGUAGE <Code>"
     short:          "Sprache eines Nicknames ändern."
-    help:           "Ändert die Sprache eines anderen Nicknames.\nVerfügbare Sprachen: en (Englisch), es (Spanisch).\n\nSyntax: SASET <Nickname> LANGUAGE <Code>\nBeispiel: SASET Benutzer LANGUAGE de"
+    help:           "Ändert die Sprache eines anderen Nicknames.\nVerfügbare Sprachen: en (Englisch), es (Spanisch)."
+    example:        "/msg %bot% SASET Benutzer LANGUAGE de"
 
   timezone:
     syntax:         "SASET <Nickname> TIMEZONE <Zeitzone|OFF>"
     short:          "Zeitzone eines Nicknames ändern."
-    help:           "Setzt oder löscht die Zeitzone eines anderen Nicknames.\nVerwenden Sie OFF zum Löschen.\n\nSyntax: SASET <Nickname> TIMEZONE <Zeitzone>\nBeispiel: SASET Benutzer TIMEZONE Europe/Berlin"
+    help:           "Setzt oder löscht die Zeitzone eines anderen Nicknames.\nVerwenden Sie OFF zum Löschen."
+    example:        "/msg %bot% SASET Benutzer TIMEZONE Europe/Berlin"
 
   private:
     syntax:         "SASET <Nickname> PRIVATE {ON|OFF}"
     short:          "Privatsphäre eines Nicknames ändern."
-    help:           "Aktiviert oder deaktiviert die Privatsphäre der Informationen eines anderen Nicknames.\n\nSyntax: SASET <Nickname> PRIVATE {ON|OFF}\nBeispiel: SASET Benutzer PRIVATE ON"
+    help:           "Aktiviert oder deaktiviert die Privatsphäre der Informationen eines anderen Nicknames."
+    example:        "/msg %bot% SASET Benutzer PRIVATE ON"
 
   msg:
     syntax:         "SASET <Nickname> MSG {ON|OFF}"
     short:          "Nachrichtenpräferenz eines Nicknames ändern."
-    help:           "Legt fest, ob ein anderer Nickname Antworten als PRIVMSG (ON) oder NOTICE (OFF) erhält.\n\nSyntax: SASET <Nickname> MSG {ON|OFF}\nBeispiel: SASET Benutzer MSG ON"
+    help:           "Legt fest, ob ein anderer Nickname Antworten als PRIVMSG (ON) oder NOTICE (OFF) erhält."
+    example:        "/msg %bot% SASET Benutzer MSG ON"
 
   vhost:
     syntax:         "SASET <Nickname> VHOST [VHost]"
     short:          "Virtuellen Host eines Nicknames ändern."
-    help:           "Setzt oder löscht den virtuellen Host eines anderen Nicknames.\nVerwenden Sie \x02SASET <Nickname> VHOST\x02 ohne Wert zum Löschen.\n\nSyntax: SASET <Nickname> VHOST [VHost]\nBeispiel: SASET Benutzer VHOST benutzer.beispiel.com"
+    help:           "Setzt oder löscht den virtuellen Host eines anderen Nicknames.\nVerwenden Sie \x02SASET <Nickname> VHOST\x02 ohne Wert zum Löschen."
+    example:        "/msg %bot% SASET Benutzer VHOST benutzer.beispiel.com"
 
 # --- HELP -------------------------------------------------------------------
 help:
@@ -289,6 +309,7 @@ help:
   set_sub_syntax: "HELP %command% <Option>"
   set_sub_footer: "%marker% Verwende /msg %bot% \x02\x0303%syntax%\x03\x0F für weitere Informationen."
   syntax_label: "Syntax: \x02\x0303%syntax%\x03\x0F"
+  example_label: "Beispiel: \x02\x0303%example%\x03\x0F"
   footer: "\x0314─────────────────────────────\x03\x0F"
   group_header: "\x0310  ◆ %group%\x03\x0F"
   subgroup_header: "\x0310  ◆ %group%\x03\x0F"
@@ -326,9 +347,7 @@ userip:
 
     Dieser Befehl zeigt sensible Nickname-Informationen an.
     Verwenden Sie ihn verantwortungsvoll.
-
-    Syntax: USERIP <nickname>
-    Beispiel: USERIP EinBenutzer
+  example:          "/msg %bot% USERIP EinBenutzer"
   not_online:       "\x0304✗\x03 Nickname \x02%nickname%\x02 ist nicht verbunden."
   result:           "\x0307ℹ\x03 Nickname: \x02%nickname%\x02 | IP: \x0307%ip%\x03 | Host: \x0307%host%\x03"
 
@@ -338,6 +357,7 @@ whoip:
   help:             |
     Listet registrierte Nicknames auf, deren letzte identifizierte Verbindung diese IP verwendet hat.
     Die gespeicherte IP-Adresse kann veraltet sein.
+  example:          "/msg %bot% WHOIP 203.0.113.42"
   empty:            "Keine registrierten Nicknames passen zu dieser IP."
   header:           "Übereinstimmende Nicknamen:"
 
@@ -353,12 +373,7 @@ suspend:
 
     Suspendierte Benutzer können sich nicht mit ihrem Nickname identifizieren.
     IRC-Operatoren und Root-Benutzer können nicht suspendiert werden.
-
-    Syntax: SUSPEND <nickname> <Dauer> <Grund>
-    Beispiele:
-      SUSPEND SchlechterBenutzer 7d Spamming in #hilfe
-      SUSPEND Missbraucher 30d Wiederholter Flood
-      SUSPEND ProblemBenutzer 0 Sperrumgehung
+  example:          "/msg %bot% SUSPEND SchlechterBenutzer 7d Spamming in #hilfe"
   success:            "\x0303✔\x03 Nickname \x02%nickname%\x02 wurde suspendiert bis \x02%duration%\x02."
   already_suspended:  "\x0304✗\x03 Nickname \x02%nickname%\x02 ist bereits suspendiert."
   not_registered:     "\x0304✗\x03 Nickname \x02%nickname%\x02 ist nicht registriert."
@@ -375,9 +390,7 @@ unsuspend:
   short:            "Suspendierung eines Nicknames aufheben."
   help:             |
     Hebt eine aktive Suspendierung eines Nicknames auf, sodass der Besitzer sich wieder identifizieren kann.
-
-    Syntax: UNSUSPEND <nickname>
-    Beispiel: UNSUSPEND EinBenutzer
+  example:          "/msg %bot% UNSUSPEND EinBenutzer"
   success:          "\x0303✔\x03 Suspendierung wurde von \x02%nickname%\x02 aufgehoben."
   not_registered:   "\x0304✗\x03 Nickname \x02%nickname%\x02 ist nicht registriert."
   not_suspended:    "\x0304✗\x03 Nickname \x02%nickname%\x02 ist nicht suspendiert."
@@ -393,9 +406,7 @@ rename:
     Das neue Nickname-Format verwendet das konfigurierte Gast-Präfix (%prefix%).
 
     Dieser Befehl erfordert die IRCop-Berechtigung: nickserv.rename
-
-    Syntax: RENAME <nickname>
-    Beispiel: RENAME Störenfried
+  example:          "/msg %bot% RENAME Gast-4F21AB"
   not_online:        "\x0304✗\x03 Nickname \x02%nickname%\x02 ist nicht verbunden."
   cannot_rename_root: "\x0304✗\x03 Root-Benutzer \x02%nickname%\x02 kann nicht umbenannt werden."
   cannot_rename_oper: "\x0304✗\x03 IRC-Operator \x02%nickname%\x02 kann nicht umbenannt werden."
@@ -415,9 +426,7 @@ drop:
     Sie können Ihren eigenen Nickname nicht löschen.
 
     Dieser Befehl erfordert die IRCop-Berechtigung: nickserv.drop
-
-    Syntax: DROP <nickname>
-    Beispiel: DROP AlterAccount
+  example:          "/msg %bot% DROP AlterAccount"
   not_registered:     "\x0304✗\x03 Nickname \x02%nickname%\x02 ist nicht registriert."
   suspended:         "\x0304✗\x03 Nickname \x02%nickname%\x02 ist suspendiert. Zuerst entsuspendieren."
   forbidden:         "\x0304✗\x03 Nickname \x02%nickname%\x02 ist gesperrt."
@@ -434,6 +443,7 @@ restore:
   syntax:           "RESTORE <nickname>"
   short:            "Einen zur Löschung anstehenden Nickname wiederherstellen."
   help:             "Stellt einen Nickname wieder her, der manuell gelöscht wurde und sich noch in der Gnadenfrist befindet. Erfordert IRCop-Berechtigung: nickserv.restore."
+  example:          "/msg %bot% RESTORE nickname"
   success:          "\x0303✓\x03 Nickname \x02%nickname%\x02 wurde wiederhergestellt."
   not_registered:   "\x0304✗\x03 Nickname \x02%nickname%\x02 ist nicht registriert."
   not_pending_deletion: "\x0304✗\x03 Nickname \x02%nickname%\x02 steht nicht zur Löschung an."
@@ -452,9 +462,7 @@ forbid:
     Root-Benutzer, IRC-Operatoren und Service-Nicknames können nicht gesperrt werden.
 
     Dieser Befehl erfordert die IRCop-Berechtigung: nickserv.forbid
-
-    Syntax: FORBID <nickname> <Grund>
-    Beispiel: FORBID SchlechterNick Wiederholte Richtlinienverstöße
+  example:          "/msg %bot% FORBID SchlechterNick Wiederholte Richtlinienverstöße"
   success:            "\x0303✔\x03 Nickname \x02%nickname%\x02 wurde gesperrt."
   updated:            "\x0303✔\x03 Sperrgrund für \x02%nickname%\x02 wurde aktualisiert."
   reason_required:    "\x0304✗\x03 Sie müssen einen Grund für die Sperrung angeben."
@@ -470,9 +478,7 @@ unforbid:
     Hebt eine Nickname-Sperrung auf, sodass der Nickname wieder verwendet werden kann.
 
     Dieser Befehl erfordert die IRCop-Berechtigung: nickserv.forbid
-
-    Syntax: UNFORBID <nickname>
-    Beispiel: UNFORBID EinNick
+  example:          "/msg %bot% UNFORBID EinNick"
   success:          "\x0303✔\x03 Nickname \x02%nickname%\x02 ist nicht mehr gesperrt."
   not_forbidden:    "\x0304✗\x03 Nickname \x02%nickname%\x02 ist nicht gesperrt."
 
@@ -485,7 +491,7 @@ forbidvhost:
     via %bot% SET VHOST festzulegen.
 
     Platzhalter: * entspricht einer beliebigen Sequenz, ? einem einzelnen Zeichen.
-    Beispiel: *.raubkopien.de sperrt jeden VHost, der auf .raubkopien.de endet.
+    Ein Muster wie *.raubkopien.de sperrt jeden VHost, der auf .raubkopien.de endet.
 
     Dieser Befehl erfordert die IRCop-Berechtigung: nickserv.forbidvhost
 
@@ -493,6 +499,7 @@ forbidvhost:
       ADD <Muster>    Ein gesperrtes Muster hinzufügen
       DEL <Muster>    Ein gesperrtes Muster entfernen
       LIST            Alle gesperrten Muster anzeigen
+  example:          "/msg %bot% FORBIDVHOST ADD *.raubkopien.de"
 
   unknown_sub: "\x0304✗\x03 Unbekannter Unterbefehl \x02%sub%\x02. Verwenden Sie ADD, DEL oder LIST."
 
@@ -504,9 +511,7 @@ forbidvhost:
       keine VHosts setzen, die diesem Muster via SET VHOST entsprechen.
 
       Platzhalter: * entspricht einer beliebigen Sequenz, ? einem einzelnen Zeichen.
-
-      Syntax: FORBIDVHOST ADD <Muster>
-      Beispiel: FORBIDVHOST ADD *.raubkopien.de
+    example:     "/msg %bot% FORBIDVHOST ADD *.raubkopien.de"
     done:            "\x0303✓\x03 Gesperrtes VHost-Muster hinzugefügt: \x02%pattern%\x02"
     already_exists:  "\x0304✗\x03 Muster \x02%pattern%\x02 existiert bereits."
     invalid:          "\x0304✗\x03 Ungültiges VHost-Muster-Format."
@@ -516,9 +521,7 @@ forbidvhost:
     short:       "Ein gesperrtes VHost-Muster entfernen."
     help:        |
       Entfernt ein Muster aus der gesperrten VHost-Liste.
-
-      Syntax: FORBIDVHOST DEL <Muster>
-      Beispiel: FORBIDVHOST DEL *.raubkopien.de
+    example:     "/msg %bot% FORBIDVHOST DEL *.raubkopien.de"
     done:        "\x0303✓\x03 Gesperrtes VHost-Muster entfernt: \x02%pattern%\x02"
     not_found:   "\x0304✗\x03 Muster \x02%pattern%\x02 nicht gefunden."
 
@@ -527,8 +530,7 @@ forbidvhost:
     syntax:      "FORBIDVHOST LIST"
     help:        |
       Zeigt alle gesperrten VHost-Muster an.
-
-      Syntax: FORBIDVHOST LIST
+    example:     "/msg %bot% FORBIDVHOST LIST"
     header:      "\x0307ℹ\x03 Gesperrte VHost-Muster (\x02%count%\x02):"
     entry:       "  %index%. \x0304%pattern%\x03 — von %nickname% (%date%)"
     empty:       "\x0307ℹ\x03 Keine gesperrten VHost-Muster."
@@ -546,25 +548,13 @@ history:
       SUSPEND, UNSUSPEND, SET PASSWORD, SET EMAIL, SASET PASSWORD,
       SASET EMAIL, RECOVER
 
-    Syntax: HISTORY <nickname> ADD <Nachricht>
-            HISTORY <nickname> DEL <id>
-            HISTORY <nickname> VIEW [PAGE|ALL]
-            HISTORY <nickname> CLEAR
-
-    Beispiele:
-      HISTORY EinNick VIEW
-      HISTORY EinNick ADD Manuelle Notiz über diesen Benutzer
-      HISTORY EinNick VIEW 2
-      HISTORY EinNick VIEW ALL
-      HISTORY EinNick DEL 123
-      HISTORY EinNick CLEAR
-
     Verwenden Sie VIEW, um den Verlauf zu sehen (zeigt standardmäßig 3 Einträge).
     Verwenden Sie VIEW PAGE 2, um die nächste Seite zu sehen.
     Verwenden Sie VIEW ALL, um den vollständigen Verlauf zu sehen.
     Verwenden Sie ADD, um einen manuellen Eintrag hinzuzufügen.
     Verwenden Sie DEL, um einen bestimmten Eintrag anhand der ID zu löschen.
     Verwenden Sie CLEAR, um alle Verlaufseinträge zu löschen.
+  example:          "/msg %bot% HISTORY EinNick VIEW"
   not_registered:   "\x0304✗\x03 Nickname \x02%nickname%\x02 ist nicht registriert."
   unknown_operator: "(unbekannt)"
 
@@ -573,9 +563,7 @@ history:
     short:      "Einen manuellen Verlaufseintrag hinzufügen."
     help:        |
       Fügt einen manuellen Eintrag zum Nickname-Verlauf hinzu.
-
-      Syntax: HISTORY <nickname> ADD <Nachricht>
-      Beispiel: HISTORY EinNick ADD Benutzer wurde wegen Spam gemeldet
+    example:     "/msg %bot% HISTORY EinNick ADD Benutzer wurde wegen Spam gemeldet"
     success:    "\x0303✔\x03 Verlaufseintrag für \x02%nickname%\x02 hinzugefügt."
 
   del:
@@ -583,9 +571,7 @@ history:
     short:      "Einen Verlaufseintrag anhand der ID löschen."
     help:        |
       Löscht einen bestimmten Verlaufseintrag anhand seiner ID.
-
-      Syntax: HISTORY <nickname> DEL <id>
-      Beispiel: HISTORY EinNick DEL 42
+    example:     "/msg %bot% HISTORY EinNick DEL 42"
     success:    "\x0303✔\x03 Verlaufseintrag \x02%id%\x02 gelöscht."
     not_found:  "\x0304✗\x03 Verlaufseintrag \x02%id%\x02 nicht gefunden."
     invalid_id: "\x0304✗\x03 Ungültige Eintrags-ID: \x02%id%\x02."
@@ -596,13 +582,10 @@ history:
     help:        |
       Zeigt den Aktionsverlauf des Nicknames an.
 
-      Syntax: HISTORY <nickname> VIEW
-              HISTORY <nickname> VIEW PAGE
-              HISTORY <nickname> VIEW ALL
-
       Standardmäßig werden 3 Einträge gleichzeitig angezeigt.
       Verwenden Sie VIEW 2, um die zweite Seite zu sehen.
       Verwenden Sie VIEW ALL, um den vollständigen Verlauf zu sehen.
+    example:     "/msg %bot% HISTORY EinNick VIEW"
     header:     "\x02Verlauf für \x0307%nickname%\x03\x02 (zeigt %start%-%end% von %total%):"
     entry:       "#%id% [%date%] \x0303%action%\x03 von %operator% — %message%"
     extra:       "  Extra \x0307→\x03 %extra%"
@@ -615,9 +598,7 @@ history:
     help:        |
       Entfernt alle Verlaufseinträge für den angegebenen Nickname.
       Diese Aktion kann nicht rückgängig gemacht werden.
-
-      Syntax: HISTORY <nickname> CLEAR
-      Beispiel: HISTORY EinNick CLEAR
+    example:     "/msg %bot% HISTORY EinNick CLEAR"
     success:    "\x0303✔\x03 \x02%count%\x02 Verlaufseinträge für \x02%nickname%\x02 gelöscht."
 
 # --- Übersetzungen für Verlaufsmeldungen (verwendet beim Anzeigen des Verlaufs) ---
@@ -649,11 +630,7 @@ noexpire:
     Bei OFF gelten die normalen Ablaufregeln.
 
     Nur IRCops mit der Berechtigung 'nickserv.noexpire' können diesen Befehl verwenden.
-
-    Syntax: NOEXPIRE <nickname> {ON|OFF}
-    Beispiele:
-      NOEXPIRE WichtigerBenutzer ON
-      NOEXPIRE WichtigerBenutzer OFF
+  example:          "/msg %bot% NOEXPIRE WichtigerBenutzer ON"
   success_on:       "\x0303✔\x03 Nickname \x02%nickname%\x02 ist jetzt vor Ablauf geschützt."
   success_off:      "\x0303✔\x03 Nickname \x02%nickname%\x02 läuft jetzt normal ab."
   not_registered:   "\x0304✗\x03 Nickname \x02%nickname%\x02 ist nicht registriert."
@@ -665,6 +642,7 @@ list:
   syntax: "LIST <Muster> [Seite]"
   short: "Listet registrierte Nicknames nach Muster auf."
   help: "Listet registrierte Nicknames auf, die dem angegebenen Muster entsprechen. Das Platzhalterzeichen * steht für eine beliebige Zeichenfolge. Die Seite ist optional und beginnt bei 1."
+  example: "/msg %bot% LIST nickname*"
   header: "Nickname | Registrierung | Letzte Verbindung | IP | Status"
   row: "%nickname% | %registered% | %last_seen% | %ip% | %status%"
   page: "Seite %page%/%pages% — %total% Treffer"
@@ -686,4 +664,5 @@ saregister:
   syntax:           "SAREGISTER <Nickname> <Passwort> <E-Mail>"
   short:            "Registriert einen Nickname für einen anderen Benutzer."
   help:             "Registriert einen Nickname im Auftrag eines anderen Benutzers. Das Konto wird\nsofort aktiv: E-Mail-Verifizierung und Registrierungsdrossel entfallen.\nDie Adresse wird weiterhin geprüft und muss frei sein.\nDieser Befehl erfordert eine Operator-Berechtigung."
+  example:          "/msg %bot% SAREGISTER nickname s3cret ana@example.com"
   done:             "\x0303✔\x03 Der Nickname \x02%nickname%\x02 wurde registriert."
