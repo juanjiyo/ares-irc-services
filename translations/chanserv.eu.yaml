@@ -282,6 +282,15 @@ invite:
   done:             "\x0303✔\x03 \x02%channel%\x02 kanalera gonbidatua izan zara."
   notice_channel:   "\x0303✔\x03 \x0302%nickname%\x03(e)k bere burua gonbidatzen du kanalera."
 
+unban:
+  syntax:           "UNBAN <#kanala> [maskara|ezizena]"
+  short:            "Erabiltzaile bat ukitzen duten blokeoak kentzen ditu."
+  help:             "Kanaleko emandako erabiltzaileari eragiten dioten blokeo guztiak kentzen ditu, ezizena, ident-a eta host-a alderatuz. Argumenturik gabe zuri eragiten dizkizuten blokeoak kentzen ditu, eta maskara literal batek sarrera hori bakarrik kentzen du. Kanaleko UNBAN maila behar duzu."
+  example:          "/msg %bot% UNBAN #kanala *!*@bad.host"
+  done:             "\x0303✔\x03 \x02%target%\x02 erabiltzaileari eragiten zioten %count% blokeo kendu dira."
+  no_bans:          "\x0307ℹ\x03 Blokeoek ez diote \x02%target%\x02 erabiltzaileari eragiten."
+  user_not_found:   "\x0304✗\x03 \x02%nick%\x02 ezizena ez dago sarearekin konektatuta."
+
 admin:
   syntax:           "ADMIN <#kanala> <ezizena>"
   short:            "Eman kanal admin modua."

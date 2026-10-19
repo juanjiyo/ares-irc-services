@@ -282,6 +282,15 @@ invite:
   done:             "\x0303✔\x03 Ați fost invitat pe \x02%channel%\x02."
   notice_channel:   "\x0303✔\x03 \x0302%nickname%\x03 se invită singur pe canal."
 
+unban:
+  syntax:           "UNBAN <#canal> [mască|poreclă]"
+  short:            "Elimină banurile care afectează un utilizator."
+  help:             "Elimină toate banurile canalului care afectează utilizatorul indicat, comparând porecla, ident și host. Fără argument elimină banurile care te afectează, iar o mască literală elimină exact acea intrare. Ai nevoie de nivelul UNBAN al canalului."
+  example:          "/msg %bot% UNBAN #canal *!*@bad.host"
+  done:             "\x0303✔\x03 Au fost eliminate %count% ban(uri) care afectau \x02%target%\x02."
+  no_bans:          "\x0307ℹ\x03 Niciun ban nu afectează \x02%target%\x02."
+  user_not_found:   "\x0304✗\x03 Porecla \x02%nick%\x02 nu este conectată la rețea."
+
 admin:
   syntax:           "ADMIN <#canal> <poreclă>"
   short:            "Acordați modul de admin de canal."

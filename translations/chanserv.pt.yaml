@@ -282,6 +282,15 @@ invite:
   done:             "\x0303✔\x03 Foi convidado para \x02%channel%\x02."
   notice_channel:   "\x0303✔\x03 \x0302%nickname%\x03 convida-se para o canal."
 
+unban:
+  syntax:           "UNBAN <#canal> [máscara|nickname]"
+  short:            "Remove os banimentos que afetam um utilizador."
+  help:             "Remove todos os banimentos do canal que afetam o utilizador indicado, comparando nickname, ident e host. Sem argumento remove os banimentos que o afetam, e uma máscara literal remove exatamente essa entrada. Precisa do nível UNBAN do canal."
+  example:          "/msg %bot% UNBAN #canal *!*@bad.host"
+  done:             "\x0303✔\x03 Removidos %count% banimento(s) que afetavam \x02%target%\x02."
+  no_bans:          "\x0307ℹ\x03 Nenhum banimento afeta \x02%target%\x02."
+  user_not_found:   "\x0304✗\x03 O nickname \x02%nick%\x02 não está ligado à rede."
+
 admin:
   syntax:           "ADMIN <#canal> <nickname>"
   short:            "Atribuir modo de administrador de canal."

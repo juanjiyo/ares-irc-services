@@ -282,6 +282,15 @@ invite:
   done:             "\x0303✔\x03 U bent uitgenodigd voor \x02%channel%\x02."
   notice_channel:   "\x0303✔\x03 \x0302%nickname%\x03 nodigt zichzelf uit voor het kanaal."
 
+unban:
+  syntax:           "UNBAN <#kanaal> [masker|bijnaam]"
+  short:            "Verwijdert de bans die een gebruiker treffen."
+  help:             "Verwijdert alle bans van het kanaal die de opgegeven gebruiker treffen, waarbij bijnaam, ident en host worden vergeleken. Zonder argument worden de bans verwijderd die jou treffen, en een letterlijk masker verwijdert precies die vermelding. Je hebt het UNBAN-kanaalniveau nodig."
+  example:          "/msg %bot% UNBAN #kanaal *!*@bad.host"
+  done:             "\x0303✔\x03 %count% ban(s) die \x02%target%\x02 troffen, zijn verwijderd."
+  no_bans:          "\x0307ℹ\x03 Geen enkele ban treft \x02%target%\x02."
+  user_not_found:   "\x0304✗\x03 Bijnaam \x02%nick%\x02 is niet met het netwerk verbonden."
+
 admin:
   syntax:           "ADMIN <#kanaal> <bijnaam>"
   short:            "Geef kanaal-admin-modus."
