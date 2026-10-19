@@ -1,0 +1,124 @@
+# Feature: MemoServ Help Enrichment
+
+**Objective:** Enrich the per-command HELP of every user-visible MemoServ command with the
+ChanServ/CRegServ pattern: parameter notes + a dynamic example line via `getExampleKey()`,
+rendered by `MemoServ\Adapter\In\Irc\Help\UnifiedHelpFormatter::renderCommandHelp`.
+**Branch:** `feat/memoserv-help-enrichment` (from `main` @ `50caf115`).
+**Delivery strategy:** `ask-on-risk` — decide single PR vs chain when T4 forecasts size.
+**Test runner:** `php vendor/bin/phpunit` (exec bits lost in the Windows→Linux sync; run via `php`).
+
+## Specs
+
+**S1 — Reference material (user-provided, verbatim).** The ChatHispano `MeMO` help dump is the
+tone/richness reference. Ares rules always win over ChatHispano semantics; the dump is not a
+string source.
+
+```
+Session Start: Sun Oct 18 00:23:19 2026
+Session Ident: MeMO
+00:23 Session Ident: MeMO (-@bots.chathispano.com)
+00:23 <MeMO> 3MeMO - 7ChatHispano
+00:23 <MeMO>  
+00:23 <MeMO> 3MeMO es un robot que permite que los usuarios se envíen mensajes entre ellos.
+00:23 <MeMO>  
+00:23 <MeMO> Comandos disponibles:
+00:23 <MeMO>   12SEND      Envía un mensaje a un usuario
+00:23 <MeMO>  12IGNORE     Administra la lista de usuarios ignorados
+00:23 <MeMO>   12ENABLE    Activa el servicio
+00:23 <MeMO>   12DISABLE   Desactiva el servicio
+00:23 <MeMO>  
+00:23 <MeMO> FIN de la AYUDA de 3MeMO
+Session Close: Sun Oct 18 06:37:58 2026
+```
+
+**S2 — Formatter contract (mirror of ChanServ).** `renderCommandHelp` renders the example block
+only when the handler declares `getExampleKey()` (`method_exists` contract) and it returns a
+string; the block is `help.example_label` with `%example%`, placed after the syntax line and
+before the footer. Handlers without the hook keep their current output byte-for-byte. Implemented
+in MemoServ's OWN copy of the formatter — no cross-service import, no shared base (protocol
+isolation / controlled duplication).
+
+**S3 — Scope.** In scope: the 7 user-visible commands — SEND, LIST, READ, DEL, IGNORE, ENABLE,
+DISABLE. Each declares `getExampleKey()` and, where a dynamic placeholder adds value,
+`getHelpParams()` (already supported by the formatter at `UnifiedHelpFormatter.php:115`).
+OUT of scope: HELP (documents itself; ChanServ precedent), IGNORE sub-option examples
+(`renderSubCommandHelp` has no example support in any copy), every behavior change.
+
+**S4 — Locale coverage.** Every new user-visible string exists in all 14 locales
+(`ca de el en es eu fr gl it nl pl pt ro tr`): `help.example_label` plus each command's
+`example` key.
+
+**S5 — Dynamic nick.** Examples use `%bot%` (resolved by `MemoServContext` placeholders via
+`ServiceNicknameRegistry::getAllPlaceholders()`), never a hardcoded service nickname.
+
+**S6 — No behavior change.** Adapter + translations + tests only. Domain and Application
+untouched.
+
+**S7 — Tests.** `UnifiedHelpFormatterTest` (or MemoServ equivalent) proves the example block
+renders when declared and is absent otherwise; `HelpCommandTest` integration asserts the same
+end-to-end. Zero failures/warnings/notices/skips/incomplete/risky/deprecations.
+
+**S8 — Quality gates.** `php -l`, `lint:container`, `lint:yaml`, PHPStan `--level=max`
+(0 errors), PHP-CS-Fixer, Deptrac (0 warnings / 0 errors), and
+`./scripts/check-coverage.sh 100 --issues` run exactly once at the end, requiring exact 100%
+line coverage (equality of covered/total statements, not a rounded display).
+
+## Tasks
+
+- **T1** (S2, S8) — DONE — Formatter: example block in `renderCommandHelp` (`method_exists`
+  → `is_string` → `help.example_label` with `%example%`, between the syntax line and the
+  footer); `help.example_label` added to `translations/memoserv.en.yaml`. Tests:
+  `rendersExampleLineWhenHandlerDeclaresExampleKey` (RED observed first) and
+  `omitsExampleLineWhenHandlerLacksExampleKey`. Evidence: `UnifiedHelpFormatterTest` 8/8
+  green; full `tests/MemoServ` 287 tests / 2031 assertions green. Route: inline (parent).
+  Status: done.
+- **T2** (S3, S5) — DONE — 7 commands declare `getExampleKey()` (`send/read/list/del/ignore/
+  enable/disable.example`); English example strings with `%bot%` in
+  `translations/memoserv.en.yaml`. Route: inline (parent).
+- **T3** (S4, S5) — DONE (landed together with T2 in one commit — the parity tests forbid
+  en-only keys). `help.example_label` + the 7 `example` keys added to the 13 remaining locales
+  (104 strings) by a delegated writer. Labels: ca `Exemple`, de `Beispiel`, el `Παράδειγμα`,
+  es `Ejemplo`, eu `Adibidea`, fr `Exemple :`, gl `Exemplo`, it `Esempio`, nl `Voorbeeld`,
+  pl `Przykład`, pt `Exemplo`, ro `Exemplu`, tr `Örnek`. Illustrative words localized per
+  language alongside the message text (`apodo`/`rumuz`/…). Evidence: `TranslationCatalogTest`
+  OK (11 tests / 34443 assertions); `TranslationCatalogTest` + `tests/MemoServ` OK (298 tests /
+  36487 assertions); parent spot checks on es/tr. Route: delegated (context reason).
+- **T4** (S7, S8) — DONE — Integration tests in `HelpCommandTest`
+  (`showsExampleLineInCommandHelpWhenCommandDeclaresExampleKey` +
+  `omitsExampleLineInCommandHelpWhenCommandDeclaresNoExampleKey`, driven by a new
+  `?string $exampleKey` parameter on `createDummyCommand`) and `getExampleKeyReturnsCorrectKey()`
+  in each of the 7 command test files. Full gate chain green: `php -l`, `lint:container`,
+  `lint:yaml` (139 files), PHPStan max (0 errors), CS-Fixer (0 files), Deptrac (0 uncovered /
+  0 warnings / 0 errors), `check-coverage.sh 100 --issues` → **100.00% (22840/22840 lines)**.
+  Route: inline + gates. Status: done.
+
+## Log
+
+- **L1 (2026-10-18)** — User request, verbatim: "Que otro(s) textos quieres para enrriquecer
+  Ares? (P.D: No tengo acceso a OperServ, ni a comandos de IRCop e ChatHipano)", followed by
+  the MeMO help dump shown in S1. No oper-only surface available; MemoServ chosen as the next
+  user-visible service.
+- **L2 (2026-10-18)** — User authorized the feature: "Si" to "¿Arrancamos con MemoServ
+  basándonos en este estilo?".
+- **L3 (2026-10-19)** — User: "Dale" — proceed.
+- **L4** — Reconnaissance evidence (this machine, `/opt/ares`): 7 command files under
+  `src/MemoServ/Adapter/In/Irc/Command/`; `getHelpParams()` already supported at
+  `UnifiedHelpFormatter.php:115`; zero `getExampleKey` matches in `src/MemoServ`; zero
+  `example:` keys and zero `example_label` across all 14 `translations/memoserv.*.yaml`;
+  `MemoServContext.php:128` injects `%bot%` placeholders via `getAllPlaceholders()`; IGNORE
+  exposes 3 sub-options (ADD/DEL/LIST) through `getSubCommandHelp()`.
+- **L5 (2026-10-19)** — The coverage gate caught a real gap that focused runs had hidden: T1–T3
+  added `getExampleKey()` to the 7 real commands, but every HELP test uses command doubles, so
+  those 7 methods were never executed → `Coverage 99.97% is below minimum 100%
+  (lines: 22833/22840)`. The clover report confirmed the uncovered lines were exactly the 7
+  `return '<cmd>.example';` statements. Fixed by mirroring the pattern this repo already uses
+  (`getExampleKeyReturnsCorrectKey()` in each command's own test file), not by weakening the gate.
+  Re-run: 100.00% (22840/22840).
+- **L6 (2026-10-19)** — User delivery instruction, verbatim: "Cuando acabes, sube tambien a mi
+  repo aparte de hacer issue o pr a David". Delivered: branch pushed to the `juanjiyo` fork,
+  issue `davidlig/ares-irc-services#35`, PR `#36` (`Closes #35`). Both carry the fork's 39
+  unmerged CReG commits as payload because the branch is based on the fork's `main`; the user
+  chose that explicitly ("Dejarlo como ChanServ #34") after seeing the evidence, and the PR body
+  states it. ChanServ PR #34 has the same shape (44 commits / 295 files / +17,961).
+  Labels (`type:feature`, `status:approved`, `size:exception`) need maintainer application —
+  the `juanjiyo` token has read-only access to upstream.
