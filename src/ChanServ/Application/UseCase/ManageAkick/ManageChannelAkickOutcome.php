@@ -20,4 +20,15 @@ enum ManageChannelAkickOutcome
     case Added;
     case Deleted;
     case EntryNotFound;
+    case InvalidReason;
+    case ReasonUpdated;
+    case Cleared;
+    case Counted;
+    case Checked;
+    case NicknameNotConnected;
+    case Enforced;
+    case ViewEmpty;
+    case Viewed;
+    case LastUseEmpty;
+    case LastUsed;
 }
